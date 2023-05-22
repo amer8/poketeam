@@ -33,7 +33,7 @@
     "@types/node": "20.2.3",
     "@types/project-name-generator": "^2.1.1",
     "@types/react": "18.0.30",
-    "@types/react-dom": "18.0.11",
+    "@types/react-dom": "18.2.4",
     "eslint": "8.36.0",
     "eslint-config-next": "13.4.3",
     "prettier": "^2.8.8",
