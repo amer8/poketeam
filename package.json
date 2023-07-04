@@ -22,7 +22,7 @@
     "axios": "^1.4.0",
     "framer-motion": "^10.12.17",
     "idb": "^7.1.1",
-    "next": "13.4.7",
+    "next": "13.4.8",
     "project-name-generator": "^2.1.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
