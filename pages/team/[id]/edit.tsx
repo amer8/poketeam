@@ -39,6 +39,7 @@ export default function PageEdit() {
           href="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg"
           type="image/svg+xml"
         />
+        <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
       </Head>
       <main className={roboto.className}>
         <NavBar />
