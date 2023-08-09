@@ -1,6 +1,6 @@
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
-import { Roboto } from "next/font/google";
+import { Exo_2, Roboto } from "next/font/google";
 import {
   Button,
   Flex,
@@ -13,6 +13,7 @@ import { listTeams } from "@/services/teams";
 import TeamList from "@/components/TeamList";
 import TeamListIntro from "@/components/TeamListIntro";
 import TeamListLoading from "@/components/TeamListLoading";
+import SortBy from "@/components/TeamSortBy";
 
 const roboto = Roboto({
   weight: "400",
@@ -23,6 +24,8 @@ export interface FilterQuery {
   type: string | undefined;
 }
 
+
+
 export default function PageList() {
   const router = useRouter();
   const [isTeamsLoading, setIsTeamsLoading] = useState<boolean>(true);
@@ -31,7 +34,17 @@ export default function PageList() {
   const [filterQuery, setFilterQuery] = useState<FilterQuery>(
     {} as FilterQuery
   );
- 
+  const [sortedData, setSortedData] = useState([...teams]);
+  const [sortOption, setSortOption] = useState<string>();
+
+  const sortOptions = [
+    {id: 1, label: "Exp DESC"},
+    {id: 2, label: "Exp ASC"},
+    {id: 2, label: "Name ASC"},
+    {id: 2, label: "Name DESC"},
+    
+  ]
+
   useEffect(() => {
     const runQuery = async () => {
       let teams = await listTeams();
@@ -51,6 +64,28 @@ export default function PageList() {
     };
     runQuery();
   }, [filterQuery]);
+
+  const sortData = (option: any) => {
+    const sorted = [...teams];
+    switch (option.label) {
+      case 'Exp DESC':
+        sorted.sort((a, b) => b.baseExpTotal - a.baseExpTotal);
+        break;
+      case 'Exp ASC':
+        sorted.sort((a, b) => a.baseExpTotal - b.baseExpTotal);
+        break;
+      case 'Name ASC':
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'Exp ASC':
+        sorted.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      // Weitere Sortieroptionen könnten hier hinzugefügt werden
+      default:
+        break;
+    }
+    setSortedData(sorted);
+  };
 
   return (
     <>
@@ -85,6 +120,15 @@ export default function PageList() {
                   setFilterQuery({ ...filterQuery, type })
                 }
               />
+              <SortBy
+                sortOptions={sortOptions}
+                selectedOption={sortOption}
+                onSelectOption={(sortOption: any) => {
+                  setSortOption(sortOption);
+                  sortData(sortOption);
+                  }
+                }
+                />
               <Spacer />
               <Button
                 onClick={() => router.push("/team/create")}
@@ -93,7 +137,7 @@ export default function PageList() {
                 Create team
               </Button>
             </Flex>
-            <TeamList teams={teams}/>
+            <TeamList teams={sortOption ? sortedData : teams}/>
           </>
         ) : (
           <TeamListIntro />
