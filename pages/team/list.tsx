@@ -77,7 +77,7 @@ export default function PageList() {
       case 'Name ASC':
         sorted.sort((a, b) => a.name.localeCompare(b.name));
         break;
-      case 'Exp ASC':
+      case 'Name DESC':
         sorted.sort((a, b) => b.name.localeCompare(a.name));
         break;
       // Weitere Sortieroptionen könnten hier hinzugefügt werden
