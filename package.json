@@ -12,8 +12,8 @@
   },
   "engines": {
     "npm": "please-use-yarn-v1",
-    "yarn": ">= 1.22.19",
-    "node": ">= 18.0.0"
+    "yarn": ">= 1.22.17",
+    "node": ">= 16.17.0"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.0",
