@@ -1,11 +1,7 @@
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
 import { Exo_2, Roboto } from "next/font/google";
-import {
-  Button,
-  Flex,
-  Spacer,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Spacer } from "@chakra-ui/react";
 import ListFilter from "@/components/TeamListFilter";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -24,8 +20,6 @@ export interface FilterQuery {
   type: string | undefined;
 }
 
-
-
 export default function PageList() {
   const router = useRouter();
   const [isTeamsLoading, setIsTeamsLoading] = useState<boolean>(true);
@@ -38,12 +32,11 @@ export default function PageList() {
   const [sortOption, setSortOption] = useState<string>();
 
   const sortOptions = [
-    {id: 1, label: "Exp DESC"},
-    {id: 2, label: "Exp ASC"},
-    {id: 2, label: "Name ASC"},
-    {id: 2, label: "Name DESC"},
-    
-  ]
+    { id: 1, label: "Exp DESC" },
+    { id: 2, label: "Exp ASC" },
+    { id: 2, label: "Name ASC" },
+    { id: 2, label: "Name DESC" },
+  ];
 
   useEffect(() => {
     const runQuery = async () => {
@@ -68,16 +61,16 @@ export default function PageList() {
   const sortData = (option: any) => {
     const sorted = [...teams];
     switch (option.label) {
-      case 'Exp DESC':
+      case "Exp DESC":
         sorted.sort((a, b) => b.baseExpTotal - a.baseExpTotal);
         break;
-      case 'Exp ASC':
+      case "Exp ASC":
         sorted.sort((a, b) => a.baseExpTotal - b.baseExpTotal);
         break;
-      case 'Name ASC':
+      case "Name ASC":
         sorted.sort((a, b) => a.name.localeCompare(b.name));
         break;
-      case 'Name DESC':
+      case "Name DESC":
         sorted.sort((a, b) => b.name.localeCompare(a.name));
         break;
       // Weitere Sortieroptionen könnten hier hinzugefügt werden
@@ -106,29 +99,41 @@ export default function PageList() {
           href="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg"
           type="image/svg+xml"
         />
-        <link rel="apple-touch-icon" sizes="180x180" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/192px-Pok%C3%A9_Ball_icon.svg.png" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/192px-Pok%C3%A9_Ball_icon.svg.png"
+        />
       </Head>
       <main className={roboto.className}>
         <NavBar />
-        {isTeamsLoading ? <TeamListLoading /> : (teams.length ? (
+        {isTeamsLoading ? (
+          <TeamListLoading />
+        ) : teams.length ? (
           <>
-            <Flex marginBottom={3} padding="5">
-              <ListFilter
-                availableTypes={availableTypes}
-                selectedType={filterQuery.type}
-                onSelectType={(type) =>
-                  setFilterQuery({ ...filterQuery, type })
-                }
-              />
-              <SortBy
-                sortOptions={sortOptions}
-                selectedOption={sortOption}
-                onSelectOption={(sortOption: any) => {
-                  setSortOption(sortOption);
-                  sortData(sortOption);
+            <Flex marginBottom={3} p={5} gap={1}>
+              <Flex
+                flexDirection={{ base: "column", sm: "row" }}
+                alignItems="left"
+                justifyContent="space-between"
+                gap={3}
+              >
+                <ListFilter
+                  availableTypes={availableTypes}
+                  selectedType={filterQuery.type}
+                  onSelectType={(type) =>
+                    setFilterQuery({ ...filterQuery, type })
                   }
-                }
                 />
+                <SortBy
+                  sortOptions={sortOptions}
+                  selectedOption={sortOption}
+                  onSelectOption={(sortOption: any) => {
+                    setSortOption(sortOption);
+                    sortData(sortOption);
+                  }}
+                />
+              </Flex>
               <Spacer />
               <Button
                 onClick={() => router.push("/team/create")}
@@ -137,11 +142,11 @@ export default function PageList() {
                 Create team
               </Button>
             </Flex>
-            <TeamList teams={sortOption ? sortedData : teams}/>
+            <TeamList teams={sortOption ? sortedData : teams} />
           </>
         ) : (
           <TeamListIntro />
-        )) }
+        )}
       </main>
     </>
   );

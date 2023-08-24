@@ -1,4 +1,4 @@
-import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import { Button, Box, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
 
 interface Props {
@@ -13,6 +13,7 @@ const TeamListFilter = ({
   selectedType,
 }: Props) => {
   return (
+    <Box>
     <Menu>
       <MenuButton
         as={Button}
@@ -36,6 +37,7 @@ const TeamListFilter = ({
         ))}
       </MenuList>
     </Menu>
+    </Box>
   );
 };
 
