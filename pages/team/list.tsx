@@ -20,6 +20,8 @@ export interface FilterQuery {
   type: string | undefined;
 }
 
+
+
 export default function PageList() {
   const router = useRouter();
   const [isTeamsLoading, setIsTeamsLoading] = useState<boolean>(true);

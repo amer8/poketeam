@@ -13,7 +13,7 @@ const TeamSortBY = ({
   onSelectOption
 }: Props) => {
   return (
-    <Box>
+    <Box ml={8}>
         <Menu>
             <MenuButton
                 as={Button}
