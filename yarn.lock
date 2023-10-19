@@ -1168,10 +1168,10 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/project-name-generator@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@types/project-name-generator/-/project-name-generator-2.1.1.tgz#6e6d4cdd74979e583db2a30766253c146aa3fb8e"
-  integrity sha512-VLd5FEVTJs8hNa/WF4pZRcFvv0OAcIGeTyki4RDcaID0TUhTc5/Xe/btYM2XIHwVCb67ila8wUJYKJNa5dVABw==
+"@types/project-name-generator@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@types/project-name-generator/-/project-name-generator-2.1.2.tgz#7a84e0b1c06504510539ff9d8a1589fee0c35d65"
+  integrity sha512-iUlvsy2KYPekEHk9VVU5zm1jTKKnXr1CWNP9j7WaDg4MXFCwhCIrHwlBZonZa085Uz2Qsw2d+sWVi8fmenFLIA==
 
 "@types/prop-types@*":
   version "15.7.5"
