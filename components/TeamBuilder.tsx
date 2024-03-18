@@ -25,6 +25,9 @@ const TeamBuilder = () => {
   const [team, setTeam] = useState<any[]>([]);
 
   const handleAddPokemon = async () => {
+    if (team.length == 6) {
+      return;
+    }
     setLoading(true);
     const newPokemon = await fetchRandomPokemon();
     setTeam([...team, newPokemon]);
@@ -56,9 +59,9 @@ const TeamBuilder = () => {
   return (
     <VStack align="center" padding="5" w="100%">
       <Box w="100%" alignItems="center" maxWidth="1300px">
-        <SimpleGrid minChildWidth="175px" spacing={2}>
+        <SimpleGrid minChildWidth="150px" spacing={2}>
           {[...team, ...Array(6 - team.length)].map((pokemon, i) => (
-            <PokemonCard key={i} pokemon={pokemon} />
+            <a onClick={handleAddPokemon} key={i}><PokemonCard pokemon={pokemon} isLoading={isLoading && i === team.length} /></a>
           ))}
         </SimpleGrid>
       </Box>

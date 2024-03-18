@@ -25,9 +25,9 @@ const TeamEditor = () => {
   return (
     <VStack align="center" padding="5" w="100%">
       <Box w="100%" alignItems="center" maxWidth="1300px">
-        <SimpleGrid minChildWidth="175px" spacing={2}>
+        <SimpleGrid minChildWidth="150px" spacing={2}>
           {[...pokemons, ...Array(6 - pokemons.length)].map((pokemon, i) => (
-            <PokemonCard key={i} pokemon={pokemon} />
+            <PokemonCard key={i} pokemon={pokemon} isLoading={false} />
           ))}
         </SimpleGrid>
       </Box>

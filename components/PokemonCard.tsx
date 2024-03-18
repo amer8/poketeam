@@ -34,9 +34,10 @@ interface Props {
     }[];
     full: any;
   };
+  isLoading: boolean;
 }
 
-const PokemonCard = ({ pokemon }: Props) => {
+const PokemonCard = ({ pokemon, isLoading }: Props) => {
   return pokemon ? (
     <LightMode>
       <Card
@@ -52,7 +53,7 @@ const PokemonCard = ({ pokemon }: Props) => {
         <VStack spacing={0}>
           <Flex>
             <Text
-              w="100px"
+              w="78px"
               fontSize="md"
               fontWeight="bold"
               textTransform="capitalize"
@@ -101,7 +102,13 @@ const PokemonCard = ({ pokemon }: Props) => {
       maxWidth="190px"
       minHeight="270px"
     >
-        <Image src="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg" height={150} alt="logo" />
+        <Image src="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg" height={150} alt="logo" css={isLoading ? {
+          '@keyframes rotateImage': {
+            from: { transform: 'rotate(0deg)' },
+            to: { transform: 'rotate(360deg)' },
+          },
+          animation: 'rotateImage 1s ease-in infinite',
+        } : {}} />
     </Center>
   );
 };

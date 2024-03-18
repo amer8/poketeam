@@ -36,8 +36,8 @@ export default function PageList() {
   const sortOptions = [
     { id: 1, label: "Exp DESC" },
     { id: 2, label: "Exp ASC" },
-    { id: 2, label: "Name ASC" },
-    { id: 2, label: "Name DESC" },
+    { id: 3, label: "Name ASC" },
+    { id: 4, label: "Name DESC" },
   ];
 
   useEffect(() => {
