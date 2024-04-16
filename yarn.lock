@@ -2248,10 +2248,10 @@ form-data@^4.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-framer-motion@^11.0.20:
-  version "11.0.20"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-11.0.20.tgz#6bb72bd0b8020fc417a40453b9247d596acbea78"
-  integrity sha512-YSDmWznt3hpdERosbE0UAPYWoYhTnmQ0J1qWPsgpCia9NgY8Xsz5IpOiUEGGj/nzCAW29fSrWugeLRkdp5de7g==
+framer-motion@^11.1.1:
+  version "11.1.1"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-11.1.1.tgz#c897ac9ad650f37e23433b76e9a10dec149df318"
+  integrity sha512-h2Zz95boULAIvow/2y8CQTFv5MHxPQO/98DrAwMe4HoI8/fcU6hUfH+886u8W/5oedp5zCCZ7qUVS46ZWoTEuA==
   dependencies:
     tslib "^2.4.0"
 
