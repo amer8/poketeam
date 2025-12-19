@@ -4,8 +4,6 @@ This is a [Next.js](https://nextjs.org/) demo project bootstrapped with [`create
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
 yarn install
 yarn dev
