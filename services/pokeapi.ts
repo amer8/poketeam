@@ -20,7 +20,7 @@ function extractAbilityId(abilityUrl: string) {
     throw new Error(`Unexpected ability path: ${url.pathname}`);
   }
 
-  return abilityPath[1];
+  return Number.parseInt(abilityPath[1], 10);
 }
 
 export async function fetchRandomPokemon() {
@@ -46,7 +46,8 @@ export async function fetchRandomPokemon() {
     if (ab.is_hidden) continue;
 
     const abilityId = extractAbilityId(ab.ability.url);
-    const { data } = await pokeApi.get(`/ability/${abilityId}`);
+    const safeAbilityId = encodeURIComponent(String(abilityId));
+    const { data } = await pokeApi.get(`/ability/${safeAbilityId}`);
     abilities.push({ ...ab, full: data });
   }
 
