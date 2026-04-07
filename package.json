@@ -20,7 +20,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "axios": "^1.7.2",
-    "framer-motion": "^11.2.10",
+    "framer-motion": "^12.38.0",
     "idb": "^8.0.0",
     "next": "^16.1.7",
     "project-name-generator": "^2.1.9",
