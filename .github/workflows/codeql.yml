@@ -1,0 +1,65 @@
+name: "CodeQL Advanced"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    # Every day at 00:00 UTC
+    - cron: '0 0 * * *'
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    timeout-minutes: 60 # Prevent runaway jobs from consuming minutes indefinitely
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: actions
+            build-mode: none
+          - language: javascript-typescript
+            build-mode: none
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          # Use the security-extended suite for broader vulnerability coverage
+          # Default suite only covers ~150 queries; extended adds ~250+ including
+          # XSS, prototype pollution, ReDoS, path traversal etc.
+          queries: security-extended
+          # Set a threat model appropriate for a web app fetching external data
+          # This tells CodeQL to treat fetch() / API responses as untrusted sources
+          # (only relevant for javascript-typescript; ignored for actions)
+          config: |
+            threat-models:
+              - remote
+
+      # Cache CodeQL databases across runs for faster reruns on unchanged code
+      - name: Cache CodeQL database
+        uses: actions/cache@v4
+        with:
+          path: ~/.codeql/databases
+          key: codeql-db-${{ matrix.language }}-${{ github.sha }}
+          restore-keys: |
+            codeql-db-${{ matrix.language }}-
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{ matrix.language }}"
+          # Upload results even on failure so partial findings aren't lost
+          upload: always
+  
