@@ -1,13 +1,12 @@
-import { Box, Icon, useColorMode } from "@chakra-ui/react";
-import { CgDarkMode } from "react-icons/cg";
+import { Box, useColorMode } from "@chakra-ui/react";
+import { DarkModeIcon } from "./AppIcons";
 
 const ColorModeSwitch = () => {
   const { toggleColorMode } = useColorMode();
 
   return (
     <Box paddingRight={2}>
-      <Icon
-        as={CgDarkMode}
+      <DarkModeIcon
         color="gray.500"
         onClick={toggleColorMode}
         cursor="pointer"

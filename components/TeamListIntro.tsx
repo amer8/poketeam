@@ -1,6 +1,6 @@
 import { Button, Center, Heading, Link, List, ListIcon, ListItem, VStack } from "@chakra-ui/react";
 import router from "next/router";
-import { MdCheckCircle } from "react-icons/md";
+import { CheckCircleIcon } from "./AppIcons";
 
 const TeamListIntro = () => {
   return (
@@ -25,7 +25,7 @@ const TeamListIntro = () => {
           </Heading>
           <List spacing={3}>
             <ListItem>
-              <ListIcon as={MdCheckCircle} color="green.500" />
+              <ListIcon as={CheckCircleIcon} color="green.500" />
               <Link
                 textDecoration="underline"
                 href="https://pokeapi.co/"
@@ -53,7 +53,7 @@ const TeamListIntro = () => {
               trademarks of Nintendo.
             </ListItem>
             <ListItem>
-              <ListIcon as={MdCheckCircle} color="green.500" />
+              <ListIcon as={CheckCircleIcon} color="green.500" />
               <Link
                 textDecoration="underline"
                 href="https://commons.wikimedia.org/wiki/File:Pok%C3%A9_Ball_icon.svg"

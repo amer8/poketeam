@@ -1,10 +1,16 @@
 import { Box, Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import { BsChevronDown } from "react-icons/bs";
+import { ChevronDownIcon } from "./AppIcons";
+
+interface SortOption {
+  id: number;
+  label: string;
+  value: "exp-desc" | "exp-asc" | "name-asc" | "name-desc";
+}
 
 interface Props {
-  sortOptions: any;
-  selectedOption: any;
-  onSelectOption: (type: string) => void;
+  sortOptions: SortOption[];
+  selectedOption: SortOption | undefined;
+  onSelectOption: (option: SortOption) => void;
 }
 
 const TeamSortBY = ({
@@ -17,15 +23,13 @@ const TeamSortBY = ({
         <Menu>
             <MenuButton
                 as={Button}
-                textTransform="capitalize"
-                rightIcon={<BsChevronDown />}
+                rightIcon={<ChevronDownIcon />}
             >
-              {selectedOption ? "Sort by: " + selectedOption.label : "Sort by:"}
+              {selectedOption ? selectedOption.label : "Sort teams"}
             </MenuButton>
             <MenuList>
-                {sortOptions.map((sortOption: any) => (
+                {sortOptions.map((sortOption) => (
                   <MenuItem
-                    textTransform="capitalize"
                     key={sortOption.id}
                     onClick={() => onSelectOption(sortOption)}
                     >

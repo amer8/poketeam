@@ -1,12 +1,17 @@
-import axios from "axios";
 import { findPokemon, savePokemon } from "./pokemons";
 
 const POKEAPI_ORIGIN = "https://pokeapi.co";
 const POKEAPI_BASE_PATH = "/api/v2";
+const POKEAPI_BASE_URL = `${POKEAPI_ORIGIN}${POKEAPI_BASE_PATH}`;
 
-const pokeApi = axios.create({
-  baseURL: `${POKEAPI_ORIGIN}${POKEAPI_BASE_PATH}`,
-});
+async function fetchJson(path: string) {
+  const response = await fetch(`${POKEAPI_BASE_URL}${path}`);
+  if (!response.ok) {
+    throw new Error(`PokeAPI request failed: ${response.status} ${response.statusText}`);
+  }
+
+  return response.json();
+}
 
 function extractAbilityId(abilityUrl: string) {
   const url = new URL(abilityUrl);
@@ -35,9 +40,9 @@ export async function fetchRandomPokemon() {
       return pokemon;
     }
 
-    const res = await pokeApi.get(`/pokemon/${randomId}`);
-    if (res.data.base_experience) {
-      pokemon = res.data;
+    const data = await fetchJson(`/pokemon/${randomId}`);
+    if (data.base_experience) {
+      pokemon = data;
     }
   }
 
@@ -47,7 +52,7 @@ export async function fetchRandomPokemon() {
 
     const abilityId = extractAbilityId(ab.ability.url);
     const safeAbilityId = encodeURIComponent(String(abilityId));
-    const { data } = await pokeApi.get(`/ability/${safeAbilityId}`);
+    const data = await fetchJson(`/ability/${safeAbilityId}`);
     abilities.push({ ...ab, full: data });
   }
 

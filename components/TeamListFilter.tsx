@@ -1,5 +1,5 @@
 import { Button, Box, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import { BsChevronDown } from "react-icons/bs";
+import { ChevronDownIcon } from "./AppIcons";
 
 interface Props {
   onSelectType: (type: string) => void;
@@ -12,19 +12,23 @@ const TeamListFilter = ({
   onSelectType,
   selectedType,
 }: Props) => {
+  const buttonLabel = selectedType
+    ? `Type: ${selectedType}`
+    : "All types";
+
   return (
     <Box>
     <Menu>
       <MenuButton
         as={Button}
         textTransform="capitalize"
-        rightIcon={<BsChevronDown />}
+        rightIcon={<ChevronDownIcon />}
       >
-        {selectedType ? "Filter by: " + selectedType : "Filter by Type"}
+        {buttonLabel}
       </MenuButton>
       <MenuList>
         <MenuItem onClick={() => onSelectType("")} key="0">
-          all Types
+          All types
         </MenuItem>
         {availableTypes.map((type) => (
           <MenuItem

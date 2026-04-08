@@ -20,8 +20,11 @@ export interface FilterQuery {
   type: string | undefined;
 }
 
-
-
+interface SortOption {
+  id: number;
+  label: string;
+  value: "exp-desc" | "exp-asc" | "name-asc" | "name-desc";
+}
 export default function PageList() {
   const router = useRouter();
   const [isTeamsLoading, setIsTeamsLoading] = useState<boolean>(true);
@@ -31,13 +34,13 @@ export default function PageList() {
     {} as FilterQuery
   );
   const [sortedData, setSortedData] = useState([...teams]);
-  const [sortOption, setSortOption] = useState<string>();
+  const [sortOption, setSortOption] = useState<SortOption>();
 
-  const sortOptions = [
-    { id: 1, label: "Exp DESC" },
-    { id: 2, label: "Exp ASC" },
-    { id: 2, label: "Name ASC" },
-    { id: 2, label: "Name DESC" },
+  const sortOptions: SortOption[] = [
+    { id: 1, label: "Experience: high to low", value: "exp-desc" },
+    { id: 2, label: "Experience: low to high", value: "exp-asc" },
+    { id: 3, label: "Name: A to Z", value: "name-asc" },
+    { id: 4, label: "Name: Z to A", value: "name-desc" },
   ];
 
   useEffect(() => {
@@ -60,22 +63,21 @@ export default function PageList() {
     runQuery();
   }, [filterQuery]);
 
-  const sortData = (option: any) => {
+  const sortData = (option: SortOption) => {
     const sorted = [...teams];
-    switch (option.label) {
-      case "Exp DESC":
+    switch (option.value) {
+      case "exp-desc":
         sorted.sort((a, b) => b.baseExpTotal - a.baseExpTotal);
         break;
-      case "Exp ASC":
+      case "exp-asc":
         sorted.sort((a, b) => a.baseExpTotal - b.baseExpTotal);
         break;
-      case "Name ASC":
+      case "name-asc":
         sorted.sort((a, b) => a.name.localeCompare(b.name));
         break;
-      case "Name DESC":
+      case "name-desc":
         sorted.sort((a, b) => b.name.localeCompare(a.name));
         break;
-      // Weitere Sortieroptionen könnten hier hinzugefügt werden
       default:
         break;
     }
@@ -130,7 +132,7 @@ export default function PageList() {
                 <SortBy
                   sortOptions={sortOptions}
                   selectedOption={sortOption}
-                  onSelectOption={(sortOption: any) => {
+                  onSelectOption={(sortOption: SortOption) => {
                     setSortOption(sortOption);
                     sortData(sortOption);
                   }}
