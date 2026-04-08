@@ -1,0 +1,557 @@
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  border: 0;
+  background: transparent;
+  color: var(--app-muted);
+  cursor: pointer;
+  border-radius: 999px;
+}
+
+.iconButton:hover {
+  color: var(--app-text);
+  background: color-mix(in srgb, var(--app-surface-strong) 88%, transparent);
+}
+
+.typeBadgeGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.countBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--app-surface-strong) 92%, transparent);
+  color: var(--app-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.typeBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+  color: #fff;
+  text-shadow: 0 0 2px #999;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: capitalize;
+}
+
+.expTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.18rem 0.5rem;
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--app-surface-strong) 92%, #ffffff);
+  color: var(--app-text);
+}
+
+.expLabel {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.expValue {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.abilityTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: #3182ce;
+  color: #fff;
+  cursor: help;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+
+.pokemonImgWrap {
+  display: inline-flex;
+}
+
+.pokemonImg {
+  display: block;
+  object-fit: contain;
+}
+
+.loadingRoot {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0.25rem solid #e5e7eb;
+  border-top-color: #111827;
+  border-radius: 999px;
+  animation: spin 0.75s linear infinite;
+}
+
+.notFoundPage {
+  display: flex;
+  justify-content: center;
+  padding: 1.25rem;
+}
+
+.notFoundCard {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.textLink {
+  color: var(--app-link);
+  text-decoration: underline;
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #dfb000;
+  background: linear-gradient(180deg, #f6e05e 0%, #ecc94b 100%);
+  color: #3d2b00;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 18px rgba(236, 201, 75, 0.35);
+}
+
+.primaryButton:hover {
+  filter: brightness(0.98);
+}
+
+.introRoot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.introLead {
+  padding: 1.25rem;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.introActions {
+  display: flex;
+  justify-content: center;
+}
+
+.introSection {
+  display: flex;
+  justify-content: center;
+  padding: 1.25rem;
+}
+
+.introPanel {
+  display: flex;
+  max-width: 48rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.introHeading {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.introList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.introListItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem;
+  align-items: start;
+}
+
+.introListIcon {
+  color: #16a34a;
+  margin-top: 0.15rem;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 1.25rem;
+}
+
+.toolbarControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.fieldGroup {
+  display: flex;
+  min-width: 12rem;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.fieldLabel {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--app-text) 88%, var(--app-muted));
+}
+
+.selectField {
+  min-height: 2.5rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--app-border);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--app-surface-strong) 88%, #6b7280 12%);
+  color: var(--app-text);
+  font: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.selectField:focus {
+  outline: 2px solid color-mix(in srgb, var(--app-link) 65%, transparent);
+  outline-offset: 2px;
+}
+
+.selectField option {
+  background: color-mix(in srgb, var(--app-surface-strong) 94%, #6b7280 6%);
+  color: var(--app-text);
+}
+
+.toolbarAction {
+  flex-shrink: 0;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--app-border);
+  border-radius: 0.85rem;
+  background: var(--app-surface-strong);
+  color: var(--app-text);
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: var(--app-shadow-soft);
+}
+
+.button:hover {
+  filter: brightness(0.99);
+}
+
+.button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.buttonSecondary {
+  background: var(--app-secondary-bg);
+  color: var(--app-secondary-text);
+}
+
+.buttonDanger {
+  border-color: #991b1b;
+  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+  color: #fff;
+}
+
+.teamLayout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem;
+}
+
+.gridShell {
+  width: 100%;
+  max-width: 1300px;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 190px));
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.actionStrip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.25rem;
+}
+
+.inlineForm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.textInput {
+  min-width: 18rem;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--app-border);
+  border-radius: 0.85rem;
+  background: var(--app-surface-strong);
+  color: var(--app-text);
+}
+
+.helperText {
+  color: var(--app-muted);
+}
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.2rem;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--app-border);
+  border-bottom-width: 2px;
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--app-surface-strong) 94%, transparent);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.navBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--app-border);
+  background: color-mix(in srgb, var(--app-surface) 92%, transparent);
+  box-shadow: var(--app-shadow-soft);
+}
+
+.navBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.navLogo {
+  display: block;
+  width: 50px;
+  height: 50px;
+}
+
+.navTitleGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.navTitle {
+  font-size: 1.125rem;
+  font-weight: 800;
+}
+
+.navSubtitle {
+  color: var(--app-muted);
+  font-size: 0.75rem;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pokemonCard {
+  display: flex;
+  width: 100%;
+  max-width: 190px;
+  min-height: 270px;
+  padding: 10px;
+  border: 10px solid #f6c744;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #f6e05e 0%, #fbd38d 25%, #fefcbf 100%);
+  box-shadow: var(--app-shadow-soft);
+}
+
+.pokemonCardInner {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.pokemonCardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.pokemonCardTitle {
+  width: 100px;
+  color: #3d2b00;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.pokemonCardSection {
+  color: #5b4600;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding-top: 0.6rem;
+}
+
+.wrapRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.pokemonCardEmpty {
+  display: flex;
+  width: 100%;
+  max-width: 190px;
+  min-height: 270px;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border: 10px solid var(--app-border);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--app-surface-strong) 94%, transparent);
+  box-shadow: var(--app-shadow-soft);
+}
+
+.pokemonCardEmptyLogo {
+  display: block;
+  width: auto;
+  height: 150px;
+}
+
+.tableContainer {
+  overflow-x: auto;
+  padding: 1.25rem 1.25rem 0;
+}
+
+.teamTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.75rem;
+}
+
+.teamTableHeadCell {
+  padding: 0 1rem 0.35rem;
+  color: var(--app-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.teamRow {
+  cursor: pointer;
+}
+
+.teamRow td {
+  background: color-mix(in srgb, var(--app-surface) 96%, transparent);
+  border-top: 1px solid var(--app-border);
+  border-bottom: 1px solid var(--app-border);
+  padding: 1rem;
+  vertical-align: top;
+}
+
+.teamRow td:first-child {
+  border-left: 1px solid var(--app-border);
+  border-radius: 1rem 0 0 1rem;
+}
+
+.teamRow td:last-child {
+  border-right: 1px solid var(--app-border);
+  border-radius: 0 1rem 1rem 0;
+}
+
+.teamRow:hover td {
+  background: color-mix(in srgb, var(--app-surface-strong) 96%, transparent);
+}
+
+.teamNameRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.teamName {
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.teamCellPrimary {
+  min-width: 18rem;
+}
+
+.teamPokemonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

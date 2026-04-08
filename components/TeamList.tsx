@@ -1,8 +1,8 @@
-import { Badge, HStack, Table, TableCaption, TableContainer, Text, Tbody, Td, Th, Thead, Tr, Wrap, WrapItem } from "@chakra-ui/react";
 import router from "next/router";
 import ExpTag from "./ExpTag";
 import TypeBadge from "./TypeBadge";
 import PokemonImg from "./PokemonImg";
+import styles from "./LocalUi.module.css";
 
 interface Props {
   teams: any;
@@ -10,61 +10,58 @@ interface Props {
 
 const TeamList = ({ teams }: Props) => {
   return (
-    <TableContainer padding="5" paddingTop={0}>
-      <Table variant="simple" size="sm">
-        <TableCaption></TableCaption>
-        <Thead>
-          <Tr>
-            <Th>Team</Th>
-            <Th padding="0">Pokémons</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
+    <div className={styles.tableContainer}>
+      <table className={styles.teamTable}>
+        <thead>
+          <tr>
+            <th className={styles.teamTableHeadCell}>Team</th>
+            <th className={styles.teamTableHeadCell}>Pokemon</th>
+          </tr>
+        </thead>
+        <tbody>
           {teams.map((team: any) => (
-            <Tr
+            <tr
+              className={styles.teamRow}
               key={team.id}
               onClick={() => router.push(`/team/${team.id}/edit`)}
-              cursor="pointer"
             >
-              <Td maxWidth="sm">
-                <HStack>
-                  <Text fontWeight="bold" textTransform="capitalize">
+              <td className={styles.teamCellPrimary}>
+                <div className={styles.teamNameRow}>
+                  <span className={styles.teamName}>
                     {team.name}
-                  </Text>{" "}
+                  </span>
                   <ExpTag baseExp={team.baseExpTotal} />
-                </HStack>
+                </div>
                 <br />
                 <br />
-                <Wrap>
+                <div className={styles.wrapRow}>
                   {Object.entries(team.badges).map((entry: any[]) => (
-                    <WrapItem key={entry[0]} fontSize="x-small">
-                      <TypeBadge
-                        amount={entry[1]}
-                        type={entry[0]}
-                      />
-                    </WrapItem>
+                    <TypeBadge
+                      amount={entry[1]}
+                      key={entry[0]}
+                      type={entry[0]}
+                    />
                   ))}
-                </Wrap>
-              </Td>
-              <Td padding="0">
-                <Wrap>
+                </div>
+              </td>
+              <td>
+                <div className={styles.teamPokemonRow}>
                   {team.pokemons.map((pokemon: any) => (
-                    <WrapItem key={team.id + "-" + pokemon.id}>
-                      <PokemonImg
-                        src={pokemon.sprites.front_default}
-                        pokemonName={pokemon.name}
-                        size={"100px"}
-                        withTooltip={true}
-                      />
-                    </WrapItem>
+                    <PokemonImg
+                      key={team.id + "-" + pokemon.id}
+                      src={pokemon.sprites.front_default}
+                      pokemonName={pokemon.name}
+                      size={"100px"}
+                      withTooltip={true}
+                    />
                   ))}
-                </Wrap>
-              </Td>
-            </Tr>
+                </div>
+              </td>
+            </tr>
           ))}
-        </Tbody>
-      </Table>
-    </TableContainer>
+        </tbody>
+      </table>
+    </div>
   );
 };
 

@@ -1,18 +1,20 @@
-import { Box, useColorMode } from "@chakra-ui/react";
+import { useColorMode } from "./ColorMode";
 import { DarkModeIcon } from "./AppIcons";
+import styles from "./LocalUi.module.css";
 
 const ColorModeSwitch = () => {
-  const { toggleColorMode } = useColorMode();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Box paddingRight={2}>
-      <DarkModeIcon
-        color="gray.500"
-        onClick={toggleColorMode}
-        cursor="pointer"
-        marginTop={-1}
-      />
-    </Box>
+    <button
+      aria-label="Toggle color mode"
+      aria-pressed={colorMode === "dark"}
+      className={styles.iconButton}
+      onClick={toggleColorMode}
+      type="button"
+    >
+      <DarkModeIcon />
+    </button>
   );
 };
 

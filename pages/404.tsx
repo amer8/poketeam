@@ -1,6 +1,7 @@
 import Head from "next/head";
+import Link from "next/link";
 import { Roboto } from "next/font/google";
-import { Link, VStack } from "@chakra-ui/react";
+import styles from "@/components/LocalUi.module.css";
 
 const roboto = Roboto({
   weight: "400",
@@ -20,10 +21,14 @@ export default function TeamList() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={roboto.className}>
-        <VStack align="center" padding="5" w="100%">
+        <div className={styles.notFoundPage}>
+          <div className={styles.notFoundCard}>
           <h1>404: Page Not Found</h1>
-          <Link href="/">Back to home</Link>
-        </VStack>
+          <Link className={styles.textLink} href="/">
+            Back to home
+          </Link>
+          </div>
+        </div>
       </main>
     </>
   );

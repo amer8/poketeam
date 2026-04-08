@@ -1,12 +1,10 @@
-import { Center, Spinner, Stack } from "@chakra-ui/react";
+import styles from "./LocalUi.module.css";
 
 const TeamListLoading = () => {
   return (
-    <Center>
-    <Stack direction='row' spacing={4}>
-      <Spinner size='xl' />
-    </Stack>
-    </Center>
+    <div className={styles.loadingRoot}>
+      <div aria-label="Loading teams" className={styles.spinner} role="status" />
+    </div>
   );
 };
 

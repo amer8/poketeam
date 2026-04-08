@@ -1,4 +1,4 @@
-import { Tag, Tooltip } from "@chakra-ui/react";
+import styles from "./LocalUi.module.css";
 
 interface Props {
   ability: {
@@ -11,19 +11,13 @@ interface Props {
 
 const AbilityTag = ({ ability }: Props) => {
   return (
-      <Tooltip
-        label={ability.effect_entries[1]?.effect}
-        aria-label={ability.effect_entries[1]?.effect}
-      >
-        <Tag
-          colorScheme="blue"
-          size="sm"
-          textTransform="capitalize"
-          p={0.5}
-        >
-          {ability.name.replaceAll("-", " ")}
-        </Tag>
-      </Tooltip>
+    <span
+      aria-label={ability.effect_entries[1]?.effect}
+      className={styles.abilityTag}
+      title={ability.effect_entries[1]?.effect}
+    >
+      {ability.name.replaceAll("-", " ")}
+    </span>
   );
 };
 

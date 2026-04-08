@@ -1,15 +1,15 @@
 import Head from "next/head";
+import Link from "next/link";
 import NavBar from "@/components/NavBar";
 import { Exo_2, Roboto } from "next/font/google";
-import { Box, Button, Flex, Spacer } from "@chakra-ui/react";
 import ListFilter from "@/components/TeamListFilter";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { listTeams } from "@/services/teams";
 import TeamList from "@/components/TeamList";
 import TeamListIntro from "@/components/TeamListIntro";
 import TeamListLoading from "@/components/TeamListLoading";
 import SortBy from "@/components/TeamSortBy";
+import styles from "@/components/LocalUi.module.css";
 
 const roboto = Roboto({
   weight: "400",
@@ -26,7 +26,6 @@ interface SortOption {
   value: "exp-desc" | "exp-asc" | "name-asc" | "name-desc";
 }
 export default function PageList() {
-  const router = useRouter();
   const [isTeamsLoading, setIsTeamsLoading] = useState<boolean>(true);
   const [teams, setTeams] = useState<any[]>([]);
   const [availableTypes, setAvailableTypes] = useState<string[]>([]);
@@ -115,13 +114,8 @@ export default function PageList() {
           <TeamListLoading />
         ) : teams.length ? (
           <>
-            <Flex marginBottom={3} p={5} gap={1}>
-              <Flex
-                flexDirection={{ base: "column", sm: "row" }}
-                alignItems="left"
-                justifyContent="space-between"
-                gap={3}
-              >
+            <div className={styles.toolbar}>
+              <div className={styles.toolbarControls}>
                 <ListFilter
                   availableTypes={availableTypes}
                   selectedType={filterQuery.type}
@@ -137,15 +131,13 @@ export default function PageList() {
                     sortData(sortOption);
                   }}
                 />
-              </Flex>
-              <Spacer />
-              <Button
-                onClick={() => router.push("/team/create")}
-                colorScheme="yellow"
-              >
+              </div>
+              <div className={styles.toolbarAction}>
+                <Link className={styles.primaryButton} href="/team/create">
                 Create team
-              </Button>
-            </Flex>
+                </Link>
+              </div>
+            </div>
             <TeamList teams={sortOption ? sortedData : teams} />
           </>
         ) : (

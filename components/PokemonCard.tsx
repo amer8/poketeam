@@ -1,19 +1,8 @@
-import {
-  Card,
-  Flex,
-  Image,
-  LightMode,
-  Spacer,
-  VStack,
-  Wrap,
-  WrapItem,
-  Text,
-  Center,
-} from "@chakra-ui/react";
 import AbilityTag from "./AbilityTag";
 import ExpTag from "./ExpTag";
 import PokemonImg from "./PokemonImg";
 import TypeBadge from "./TypeBadge";
+import styles from "./LocalUi.module.css";
 
 interface Props {
   pokemon: {
@@ -38,71 +27,46 @@ interface Props {
 
 const PokemonCard = ({ pokemon }: Props) => {
   return pokemon ? (
-    <LightMode>
-      <Card
-        borderWidth="10px"
-        borderRadius="lg"
-        p="10px"
-        boxShadow="md"
-        minH="270px"
-        maxW="190px"
-        borderColor={"yellow.400"}
-        bgGradient="linear(yellow.300 0%, orange.100 25%, yellow.100 50%)"
-      >
-        <VStack spacing={0}>
-          <Flex>
-            <Text
-              w="100px"
-              fontSize="md"
-              fontWeight="bold"
-              textTransform="capitalize"
-            >
+    <article className={styles.pokemonCard}>
+      <div className={styles.pokemonCardInner}>
+        <div className={styles.pokemonCardHeader}>
+          <div className={styles.pokemonCardTitle}>
               {pokemon.name}
-            </Text>
-            <Spacer />
-            <ExpTag baseExp={pokemon.base_experience} />
-          </Flex>
+          </div>
+          <ExpTag baseExp={pokemon.base_experience} />
+        </div>
 
-          <PokemonImg
-            size="80px"
-            src={pokemon.sprites.front_default}
-            pokemonName={pokemon.name}
-          />
-          <Wrap>
-            {pokemon.types.map((type: any) => (
-              <WrapItem key={type.type.name}>
-                <TypeBadge
-                  amount={1}
-                  type={type.type.name.replaceAll("-", " ")}
-                />
-              </WrapItem>
-            ))}
-          </Wrap>
+        <PokemonImg
+          size="80px"
+          src={pokemon.sprites.front_default}
+          pokemonName={pokemon.name}
+        />
+        <div className={styles.wrapRow}>
+          {pokemon.types.map((type: any) => (
+            <TypeBadge
+              amount={1}
+              key={type.type.name}
+              type={type.type.name.replaceAll("-", " ")}
+            />
+          ))}
+        </div>
 
-          <Text p="10px" pt={"20px"} fontSize="small" fontWeight={"bold"}>
-            Abilities
-          </Text>
-          <Wrap>
-            {pokemon.abilities.map((ability: any) => (
-              <WrapItem key={ability.ability.name} cursor="help">
-                <AbilityTag ability={ability.full} />
-              </WrapItem>
-            ))}
-          </Wrap>
-        </VStack>
-      </Card>
-    </LightMode>
+        <div className={styles.pokemonCardSection}>Abilities</div>
+        <div className={styles.wrapRow}>
+          {pokemon.abilities.map((ability: any) => (
+            <AbilityTag ability={ability.full} key={ability.ability.name} />
+          ))}
+        </div>
+      </div>
+    </article>
   ) : (
-    <Center
-      borderWidth="10px"
-      borderRadius="lg"
-      p={4}
-      boxShadow="md"
-      maxWidth="190px"
-      minHeight="270px"
-    >
-        <Image src="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg" height={150} alt="logo" />
-    </Center>
+    <div className={styles.pokemonCardEmpty}>
+      <img
+        alt="Pokeball logo"
+        className={styles.pokemonCardEmptyLogo}
+        src="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg"
+      />
+    </div>
   );
 };
 

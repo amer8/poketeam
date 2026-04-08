@@ -1,4 +1,4 @@
-import { Badge } from "@chakra-ui/react";
+import styles from "./LocalUi.module.css";
 
 interface Props {
   amount: number;
@@ -28,19 +28,15 @@ const TypeBadge = ({ amount, type }: Props) => {
   ]);
 
   return (
-    <>
-      {amount > 1 ? <Badge>{amount}×</Badge> : ""}
-      <Badge
-        bgColor={colors.get(type) || "#000"}
-        color={"#fff"}
-        textShadow="0px 0px 2px #999"
-        fontSize="small"
-        size="sm"
-        textTransform="capitalize"
+    <span className={styles.typeBadgeGroup}>
+      {amount > 1 ? <span className={styles.countBadge}>{amount}×</span> : null}
+      <span
+        className={styles.typeBadge}
+        style={{ backgroundColor: colors.get(type) || "#000" }}
       >
         {type}
-      </Badge>
-    </>
+      </span>
+    </span>
   );
 };
 

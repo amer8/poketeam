@@ -1,80 +1,84 @@
-import { Button, Center, Heading, Link, List, ListIcon, ListItem, VStack } from "@chakra-ui/react";
-import router from "next/router";
+import Link from "next/link";
 import { CheckCircleIcon } from "./AppIcons";
+import styles from "./LocalUi.module.css";
 
 const TeamListIntro = () => {
   return (
-    <>
-      <Center padding={20}>
+    <div className={styles.introRoot}>
+      <div className={styles.introLead}>
         Here you can create and manage randomly generated teams.
         <br /> The data will be stored in your local browser.
         <br />
-      </Center>
-      <Center>
-        <Button
-          onClick={() => router.push("/team/create")}
-          colorScheme="yellow"
-        >
+      </div>
+      <div className={styles.introActions}>
+        <Link className={styles.primaryButton} href="/team/create">
           Create team
-        </Button>
-      </Center>
-      <Center padding={20}>
-        <VStack>
-          <Heading as="h2" size="small">
-            Attribution
-          </Heading>
-          <List spacing={3}>
-            <ListItem>
-              <ListIcon as={CheckCircleIcon} color="green.500" />
-              <Link
-                textDecoration="underline"
+        </Link>
+      </div>
+      <div className={styles.introSection}>
+        <div className={styles.introPanel}>
+          <h2 className={styles.introHeading}>Attribution</h2>
+          <ul className={styles.introList}>
+            <li className={styles.introListItem}>
+              <CheckCircleIcon className={styles.introListIcon} />
+              <span>
+              <a
+                className={styles.textLink}
                 href="https://pokeapi.co/"
+                rel="noreferrer"
                 target="_blank"
               >
                 PokéAPI
-              </Link>{" "}
+              </a>{" "}
               is created by{" "}
-              <Link
-                textDecoration="underline"
+              <a
+                className={styles.textLink}
                 href="https://phalt.github.io/"
+                rel="noreferrer"
                 target="_blank"
               >
                 Paul Hallett
-              </Link>{" "}
+              </a>{" "}
               and other{" "}
-              <Link
-                textDecoration="underline"
+              <a
+                className={styles.textLink}
                 href="https://github.com/PokeAPI/pokeapi#contributing"
+                rel="noreferrer"
                 target="_blank"
               >
                 PokéAPI contributors
-              </Link>{" "}
+              </a>{" "}
               around the world. Pokémon and Pokémon character names are
               trademarks of Nintendo.
-            </ListItem>
-            <ListItem>
-              <ListIcon as={CheckCircleIcon} color="green.500" />
-              <Link
-                textDecoration="underline"
+              </span>
+            </li>
+            <li className={styles.introListItem}>
+              <CheckCircleIcon className={styles.introListIcon} />
+              <span>
+              <a
+                className={styles.textLink}
                 href="https://commons.wikimedia.org/wiki/File:Pok%C3%A9_Ball_icon.svg"
+                rel="noreferrer"
                 target="_blank"
               >
                 &quot;Poké Ball icon&quot;
-              </Link>{" "}
+              </a>{" "}
               by Andreuvv is licensed under CC BY-SA 4.0. To view a copy
               of this license, visit{" "}
-              <Link
-                textDecoration="underline"
+              <a
+                className={styles.textLink}
                 href="https://creativecommons.org/licenses/by-sa/4.0/"
+                rel="noreferrer"
                 target="_blank"
               >
                 https://creativecommons.org/licenses/by-sa/4.0/.
-              </Link>
-            </ListItem>
-          </List>
-        </VStack>
-      </Center>
-    </>
+              </a>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 };
 

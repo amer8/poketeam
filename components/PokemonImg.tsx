@@ -1,4 +1,4 @@
-import { Image, Tooltip } from "@chakra-ui/react";
+import styles from "./LocalUi.module.css";
 
 interface Props {
   size: string;
@@ -8,20 +8,28 @@ interface Props {
 }
 
 const PokemonImg = ({ size, src, pokemonName, withTooltip}: Props) => {
+  const tooltipLabel = pokemonName.replaceAll("-", " ");
+
   if (!withTooltip) {
     return (
-      <Image boxSize={size} objectFit="contain" src={src} alt={pokemonName} />
+      <img
+        alt={pokemonName}
+        className={styles.pokemonImg}
+        src={src}
+        style={{ height: size, width: size }}
+      />
     );
   }
 
   return (
-    <Tooltip
-      textTransform="capitalize"
-      label={pokemonName}
-      aria-label={pokemonName}
-    >
-      <Image boxSize={size} objectFit="contain" src={src} alt={pokemonName} />
-    </Tooltip>
+    <span className={styles.pokemonImgWrap} title={tooltipLabel}>
+      <img
+        alt={pokemonName}
+        className={styles.pokemonImg}
+        src={src}
+        style={{ height: size, width: size }}
+      />
+    </span>
   );
 };
 

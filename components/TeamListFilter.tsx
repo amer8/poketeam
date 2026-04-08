@@ -1,5 +1,4 @@
-import { Button, Box, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import { ChevronDownIcon } from "./AppIcons";
+import styles from "./LocalUi.module.css";
 
 interface Props {
   onSelectType: (type: string) => void;
@@ -12,36 +11,22 @@ const TeamListFilter = ({
   onSelectType,
   selectedType,
 }: Props) => {
-  const buttonLabel = selectedType
-    ? `Type: ${selectedType}`
-    : "All types";
-
   return (
-    <Box>
-    <Menu>
-      <MenuButton
-        as={Button}
-        textTransform="capitalize"
-        rightIcon={<ChevronDownIcon />}
+    <label className={styles.fieldGroup}>
+      <span className={styles.fieldLabel}>Type</span>
+      <select
+        className={styles.selectField}
+        onChange={(event) => onSelectType(event.target.value)}
+        value={selectedType || ""}
       >
-        {buttonLabel}
-      </MenuButton>
-      <MenuList>
-        <MenuItem onClick={() => onSelectType("")} key="0">
-          All types
-        </MenuItem>
+        <option value="">All types</option>
         {availableTypes.map((type) => (
-          <MenuItem
-            textTransform="capitalize"
-            onClick={() => onSelectType(type)}
-            key={type}
-          >
+          <option key={type} value={type}>
             {type}
-          </MenuItem>
+          </option>
         ))}
-      </MenuList>
-    </Menu>
-    </Box>
+      </select>
+    </label>
   );
 };
 

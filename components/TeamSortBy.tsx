@@ -1,5 +1,4 @@
-import { Box, Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import { ChevronDownIcon } from "./AppIcons";
+import styles from "./LocalUi.module.css";
 
 interface SortOption {
   id: number;
@@ -18,27 +17,32 @@ const TeamSortBY = ({
   selectedOption,
   onSelectOption
 }: Props) => {
+  const selectedValue = selectedOption?.value || "";
+
   return (
-    <Box ml={8}>
-        <Menu>
-            <MenuButton
-                as={Button}
-                rightIcon={<ChevronDownIcon />}
-            >
-              {selectedOption ? selectedOption.label : "Sort teams"}
-            </MenuButton>
-            <MenuList>
-                {sortOptions.map((sortOption) => (
-                  <MenuItem
-                    key={sortOption.id}
-                    onClick={() => onSelectOption(sortOption)}
-                    >
-                    {sortOption.label}
-                  </MenuItem>
-                ))}
-            </MenuList>
-        </Menu>
-    </Box>
+    <label className={styles.fieldGroup}>
+      <span className={styles.fieldLabel}>Sort teams</span>
+      <select
+        className={styles.selectField}
+        onChange={(event) => {
+          const nextOption = sortOptions.find(
+            (sortOption) => sortOption.value === event.target.value
+          );
+
+          if (nextOption) {
+            onSelectOption(nextOption);
+          }
+        }}
+        value={selectedValue}
+      >
+        <option value="">Choose an order</option>
+        {sortOptions.map((sortOption) => (
+          <option key={sortOption.id} value={sortOption.value}>
+            {sortOption.label}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 };
 

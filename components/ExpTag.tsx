@@ -1,4 +1,4 @@
-import { Tag, TagLabel } from "@chakra-ui/react";
+import styles from "./LocalUi.module.css";
 
 interface Props {
   baseExp: number;
@@ -6,14 +6,12 @@ interface Props {
 
 const ExpTag = ({ baseExp }: Props) => {
   return (
-    <Tag>
-      <TagLabel fontSize="xx-small" mr="0.5">
-        EXP
-      </TagLabel>
-      <TagLabel fontSize="md" textTransform="capitalize" fontWeight="bold">
+    <span className={styles.expTag}>
+      <span className={styles.expLabel}>EXP</span>
+      <span className={styles.expValue}>
         {baseExp || "?"}
-      </TagLabel>
-    </Tag>
+      </span>
+    </span>
   );
 };
 

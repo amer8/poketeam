@@ -1,11 +1,11 @@
 import type { AppProps } from "next/app";
-import { ChakraProvider } from "@chakra-ui/react";
-import theme from "../utils/theme";
+import { ColorModeProvider } from "@/components/ColorMode";
+import "@/styles/globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider theme={theme}>
+    <ColorModeProvider>
       <Component {...pageProps} />
-    </ChakraProvider>
+    </ColorModeProvider>
   );
 }
