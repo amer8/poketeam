@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { deleteTeam, findTeam } from "@/services/teams";
+import ExpTag from "./ExpTag";
 import PokemonCard from "./PokemonCard";
 import styles from "./LocalUi.module.css";
 
 const TeamEditor = () => {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
-  const [pokemons, setPokemons] = useState<any[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [team, setTeam] = useState<any | null>(null);
   const teamId =
     typeof router.query.id === "string"
       ? Number.parseInt(router.query.id, 10)
@@ -19,32 +21,52 @@ const TeamEditor = () => {
       return;
     }
 
+    setErrorMessage(null);
     setLoading(true);
-    await deleteTeam(teamId);
-    router.push("/team/list");
+
+    try {
+      await deleteTeam(teamId);
+      await router.push("/team/list");
+    } catch {
+      setErrorMessage("Could not delete the team. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }, [hasValidTeamId, router, teamId]);
 
   useEffect(() => {
     if (!hasValidTeamId) {
-      setPokemons([]);
+      setTeam(null);
       return;
     }
 
     (async () => {
       const team = await findTeam(teamId);
-      setPokemons(team?.pokemons ?? []);
+      setTeam(team ?? null);
     })();
   }, [hasValidTeamId, teamId]);
 
+  const pokemons = team?.pokemons ?? [];
+
   return (
     <div className={styles.teamLayout}>
-      <div className={styles.gridShell}>
-        <div className={styles.cardGrid}>
-          {[...pokemons, ...Array(6 - pokemons.length)].map((pokemon, i) => (
-            <PokemonCard key={i} pokemon={pokemon} />
-          ))}
+      {team ? (
+        <div className={styles.teamSummaryCard}>
+          <div className={styles.teamSummaryHeader}>
+            <div className={styles.teamNameRow}>
+              <span className={styles.teamName}>{team.name}</span>
+              <ExpTag baseExp={team.baseExpTotal} />
+            </div>
+          </div>
+          <div className={styles.teamSummaryContent}>
+            <div className={styles.cardGrid}>
+              {[...pokemons, ...Array(6 - pokemons.length)].map((pokemon, i) => (
+                <PokemonCard key={i} pokemon={pokemon} />
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      ) : null}
       <div className={styles.actionStrip}>
         <button
           className={`${styles.button} ${styles.buttonSecondary}`}
@@ -62,6 +84,11 @@ const TeamEditor = () => {
           Delete team
         </button>
       </div>
+      {errorMessage ? (
+        <div aria-live="polite" className={styles.errorText} role="alert">
+          {errorMessage}
+        </div>
+      ) : null}
     </div>
   );
 };

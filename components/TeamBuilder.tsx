@@ -9,29 +9,50 @@ import styles from "./LocalUi.module.css";
 const TeamBuilder = () => {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [teamName, setTeamName] = useState("");
   const [team, setTeam] = useState<any[]>([]);
 
   const handleAddPokemon = async () => {
+    setErrorMessage(null);
     setLoading(true);
-    const newPokemon = await fetchRandomPokemon();
-    setTeam([...team, newPokemon]);
-    setLoading(false);
+
+    try {
+      const newPokemon = await fetchRandomPokemon();
+      setTeam((currentTeam) => [...currentTeam, newPokemon]);
+    } catch {
+      setErrorMessage("Could not load a Pokemon. Check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSaveTeam = useCallback(async () => {
+    setErrorMessage(null);
     setLoading(true);
-    await saveTeam({ name: teamName, pokemons: team });
-    router.push("/team/list");
+
+    try {
+      await saveTeam({ name: teamName, pokemons: team });
+      await router.push("/team/list");
+    } catch {
+      setErrorMessage("Could not save the team. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }, [router, team, teamName]);
 
   const handleKeyDown = useCallback(
     (event: any) => {
-      if (event.key === "Enter" && team.length === 6 && teamName.length) {
+      if (
+        event.key === "Enter" &&
+        !isLoading &&
+        team.length === 6 &&
+        teamName.length
+      ) {
         handleSaveTeam();
       }
     },
-    [handleSaveTeam, team.length, teamName.length]
+    [handleSaveTeam, isLoading, team.length, teamName.length]
   );
 
   useEffect(() => {
@@ -82,7 +103,12 @@ const TeamBuilder = () => {
                 placeholder="Enter your team name"
                 style={{ textTransform: "capitalize" }}
               />
-              <button className={styles.button} onClick={handleSaveTeam} type="button">
+              <button
+                className={styles.button}
+                disabled={isLoading}
+                onClick={handleSaveTeam}
+                type="button"
+              >
                 Save
               </button>
               <span className={styles.helperText}>or</span>
@@ -90,6 +116,11 @@ const TeamBuilder = () => {
           </div>
         )}
       </div>
+      {errorMessage ? (
+        <div aria-live="polite" className={styles.errorText} role="alert">
+          {errorMessage}
+        </div>
+      ) : null}
     </div>
   );
 };

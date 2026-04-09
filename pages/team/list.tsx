@@ -19,6 +19,30 @@ interface SortOption {
   label: string;
   value: "exp-desc" | "exp-asc" | "name-asc" | "name-desc";
 }
+
+function sortTeams(teams: any[], option: SortOption) {
+  const sorted = [...teams];
+
+  switch (option.value) {
+    case "exp-desc":
+      sorted.sort((a, b) => b.baseExpTotal - a.baseExpTotal);
+      break;
+    case "exp-asc":
+      sorted.sort((a, b) => a.baseExpTotal - b.baseExpTotal);
+      break;
+    case "name-asc":
+      sorted.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+    case "name-desc":
+      sorted.sort((a, b) => b.name.localeCompare(a.name));
+      break;
+    default:
+      break;
+  }
+
+  return sorted;
+}
+
 export default function PageList() {
   const [isTeamsLoading, setIsTeamsLoading] = useState<boolean>(true);
   const [teams, setTeams] = useState<any[]>([]);
@@ -26,7 +50,6 @@ export default function PageList() {
   const [filterQuery, setFilterQuery] = useState<FilterQuery>(
     {} as FilterQuery
   );
-  const [sortedData, setSortedData] = useState([...teams]);
   const [sortOption, setSortOption] = useState<SortOption>();
 
   const sortOptions: SortOption[] = [
@@ -55,27 +78,7 @@ export default function PageList() {
     };
     runQuery();
   }, [filterQuery]);
-
-  const sortData = (option: SortOption) => {
-    const sorted = [...teams];
-    switch (option.value) {
-      case "exp-desc":
-        sorted.sort((a, b) => b.baseExpTotal - a.baseExpTotal);
-        break;
-      case "exp-asc":
-        sorted.sort((a, b) => a.baseExpTotal - b.baseExpTotal);
-        break;
-      case "name-asc":
-        sorted.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case "name-desc":
-        sorted.sort((a, b) => b.name.localeCompare(a.name));
-        break;
-      default:
-        break;
-    }
-    setSortedData(sorted);
-  };
+  const visibleTeams = sortOption ? sortTeams(teams, sortOption) : teams;
 
   return (
     <>
@@ -118,7 +121,6 @@ export default function PageList() {
                   selectedOption={sortOption}
                   onSelectOption={(sortOption: SortOption) => {
                     setSortOption(sortOption);
-                    sortData(sortOption);
                   }}
                 />
               </div>
@@ -128,7 +130,7 @@ export default function PageList() {
                 </Link>
               </div>
             </div>
-            <TeamList teams={sortOption ? sortedData : teams} />
+            <TeamList teams={visibleTeams} />
           </>
         ) : (
           <TeamListIntro />

@@ -317,6 +317,30 @@
   max-width: 1520px;
 }
 
+.teamSummaryCard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1520px;
+  padding: 1rem 1.1rem;
+  gap: 1rem;
+  border: 1px solid var(--app-border);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--app-surface) 96%, transparent);
+  box-shadow: var(--app-shadow-soft);
+}
+
+.teamSummaryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.teamSummaryContent {
+  width: 100%;
+}
+
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(231px, 231px));
@@ -354,6 +378,12 @@
 
 .helperText {
   color: var(--app-muted);
+}
+
+.errorText {
+  color: #b91c1c;
+  font-weight: 700;
+  text-align: center;
 }
 
 .kbd {

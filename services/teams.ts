@@ -2,39 +2,43 @@ import { openDatabase } from "@/utils/database";
 
 const STORE_NAME = "teams";
 
+function enrichTeam(team: any) {
+  const badges = new Map();
+  let baseExpTotal = 0;
+
+  for (const pokemon of team.pokemons) {
+    for (const typeObj of pokemon.types) {
+      if (badges.has(typeObj.type.name)) {
+        badges.set(
+          typeObj.type.name,
+          (badges.get(typeObj.type.name) as number) + 1
+        );
+      } else {
+        badges.set(typeObj.type.name, 1);
+      }
+    }
+
+    baseExpTotal += pokemon.base_experience;
+  }
+
+  return {
+    ...team,
+    baseExpTotal,
+    badges: Object.fromEntries(badges.entries()),
+  };
+}
+
 export async function listTeams() {
   const db = await openDatabase(STORE_NAME);
   const teams = await db.getAll(STORE_NAME);
-  return teams.map((team) => {
-    const badges = new Map();
-    let baseExpTotal = 0;
-    for (const pokemon of team.pokemons) {
-      for (const typeObj of pokemon.types) {
-        if (badges.has(typeObj.type.name)) {
-          badges.set(
-            typeObj.type.name,
-            (badges.get(typeObj.type.name) as number) + 1
-          );
-        } else {
-          badges.set(typeObj.type.name, 1);
-        }
-      }
-
-      baseExpTotal += pokemon.base_experience;
-    }
-
-    team.baseExpTotal = baseExpTotal;
-    team.badges = Object.fromEntries(badges.entries());
-
-    return team;
-  });
+  return teams.map(enrichTeam);
 }
 
 export async function findTeam(id: number) {
   const db = await openDatabase(STORE_NAME);
   const store = db.transaction(STORE_NAME).objectStore(STORE_NAME);
   const value = await store.get(id);
-  return value;
+  return value ? enrichTeam(value) : value;
 }
 
 export async function deleteTeam(id: number) {

@@ -4,17 +4,24 @@ interface Props {
   ability: {
     effect_entries: {
       effect: string;
+      language?: {
+        name?: string;
+      };
     }[];
     name: string;
   };
 }
 
 const AbilityTag = ({ ability }: Props) => {
+  const tooltipText =
+    ability.effect_entries.find((entry) => entry.language?.name === "en")
+      ?.effect ?? ability.effect_entries[0]?.effect;
+
   return (
     <span
-      aria-label={ability.effect_entries[1]?.effect}
+      aria-label={tooltipText}
       className={styles.abilityTag}
-      title={ability.effect_entries[1]?.effect}
+      title={tooltipText}
     >
       {ability.name.replaceAll("-", " ")}
     </span>
