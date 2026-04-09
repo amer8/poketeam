@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
 import NavBar from "@/components/NavBar";
-import { Exo_2, Roboto } from "next/font/google";
 import ListFilter from "@/components/TeamListFilter";
 import { useEffect, useState } from "react";
 import { listTeams } from "@/services/teams";
@@ -10,11 +9,6 @@ import TeamListIntro from "@/components/TeamListIntro";
 import TeamListLoading from "@/components/TeamListLoading";
 import SortBy from "@/components/TeamSortBy";
 import styles from "@/components/LocalUi.module.css";
-
-const roboto = Roboto({
-  weight: "400",
-  subsets: ["latin"],
-});
 
 export interface FilterQuery {
   type: string | undefined;
@@ -94,21 +88,17 @@ export default function PageList() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
           rel="icon"
-          href="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg"
+          href="/Poke_Ball_icon.svg"
           sizes="any"
         />
         <link
           rel="icon"
-          href="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg"
+          href="/Poke_Ball_icon.svg"
           type="image/svg+xml"
         />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/192px-Pok%C3%A9_Ball_icon.svg.png"
-        />
+        <link rel="apple-touch-icon" href="/Poke_Ball_icon.svg" />
       </Head>
-      <main className={roboto.className}>
+      <main>
         <NavBar />
         {isTeamsLoading ? (
           <TeamListLoading />

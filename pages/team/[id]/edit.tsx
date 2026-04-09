@@ -1,25 +1,8 @@
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
 import TeamEditor from "@/components/TeamEditor";
-import { Roboto } from "next/font/google";
-import { findTeam } from "@/services/teams";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-
-const roboto = Roboto({
-  weight: "400",
-  subsets: ["latin"],
-});
 
 export default function PageEdit() {
-  const router = useRouter();
-  useEffect(() => {
-    const getTeam = async () => {
-      let teams = await findTeam(parseInt(String(router.query.id), 10));
-    };
-    getTeam();
-  }, [router.query.id]);
-
   return (
     <>
       <Head>
@@ -31,17 +14,17 @@ export default function PageEdit() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
           rel="icon"
-          href="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg"
+          href="/Poke_Ball_icon.svg"
           sizes="any"
         />
         <link
           rel="icon"
-          href="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg"
+          href="/Poke_Ball_icon.svg"
           type="image/svg+xml"
         />
-        <link rel="apple-touch-icon" sizes="180x180" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/192px-Pok%C3%A9_Ball_icon.svg.png" />
+        <link rel="apple-touch-icon" href="/Poke_Ball_icon.svg" />
       </Head>
-      <main className={roboto.className}>
+      <main>
         <NavBar />
         <TeamEditor />
       </main>

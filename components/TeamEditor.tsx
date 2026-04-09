@@ -8,19 +8,33 @@ const TeamEditor = () => {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
   const [pokemons, setPokemons] = useState<any[]>([]);
+  const teamId =
+    typeof router.query.id === "string"
+      ? Number.parseInt(router.query.id, 10)
+      : Number.NaN;
+  const hasValidTeamId = Number.isInteger(teamId) && teamId > 0;
 
   const handleDeleteTeam = useCallback(async () => {
+    if (!hasValidTeamId) {
+      return;
+    }
+
     setLoading(true);
-    await deleteTeam(parseInt(String(router.query.id), 10));
+    await deleteTeam(teamId);
     router.push("/team/list");
-  }, [router]);
+  }, [hasValidTeamId, router, teamId]);
 
   useEffect(() => {
+    if (!hasValidTeamId) {
+      setPokemons([]);
+      return;
+    }
+
     (async () => {
-      const team = await findTeam(parseInt(String(router.query.id), 10));
-      setPokemons(team.pokemons);
+      const team = await findTeam(teamId);
+      setPokemons(team?.pokemons ?? []);
     })();
-  }, [router.query.id]);
+  }, [hasValidTeamId, teamId]);
 
   return (
     <div className={styles.teamLayout}>

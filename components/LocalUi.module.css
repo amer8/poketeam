@@ -279,6 +279,7 @@
   color: var(--app-text);
   cursor: pointer;
   font-weight: 700;
+  text-decoration: none;
   box-shadow: var(--app-shadow-soft);
 }
 
@@ -304,6 +305,7 @@
 
 .teamLayout {
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   gap: 1.25rem;
@@ -312,14 +314,15 @@
 
 .gridShell {
   width: 100%;
-  max-width: 1300px;
+  max-width: 1520px;
 }
 
 .cardGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(175px, 190px));
+  grid-template-columns: repeat(auto-fit, minmax(231px, 231px));
   justify-content: center;
-  gap: 0.5rem;
+  align-items: start;
+  gap: 1.1rem;
 }
 
 .actionStrip {
@@ -417,67 +420,126 @@
 .pokemonCard {
   display: flex;
   width: 100%;
-  max-width: 190px;
-  min-height: 270px;
-  padding: 10px;
+  height: 320px;
+  padding: 0.7rem;
   border: 10px solid #f6c744;
-  border-radius: 1rem;
-  background: linear-gradient(180deg, #f6e05e 0%, #fbd38d 25%, #fefcbf 100%);
-  box-shadow: var(--app-shadow-soft);
+  border-radius: 1.3rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 16%),
+    linear-gradient(180deg, #f6e05e 0%, #fbd38d 25%, #fefcbf 100%);
+  box-shadow: 0 18px 32px rgba(122, 86, 8, 0.18);
 }
 
 .pokemonCardInner {
-  display: flex;
+  display: grid;
   width: 100%;
-  flex-direction: column;
-  gap: 0.6rem;
+  height: 100%;
+  flex: 1;
+  grid-template-rows: auto 104px auto;
+  gap: 0.75rem;
+  border-radius: 0.9rem;
 }
 
 .pokemonCardHeader {
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
   gap: 0.75rem;
 }
 
 .pokemonCardTitle {
-  width: 100px;
+  flex: 1;
+  min-width: 0;
   color: #3d2b00;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.15;
   text-transform: capitalize;
+}
+
+.pokemonCardMedia {
+  display: flex;
+  min-height: 104px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.9rem;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0) 68%);
+}
+
+.pokemonCardMeta {
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+}
+
+.pokemonCardBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.pokemonCardBlock:last-child {
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(122, 86, 8, 0.12);
 }
 
 .pokemonCardSection {
   color: #5b4600;
-  font-size: 0.875rem;
-  font-weight: 700;
-  padding-top: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
 }
 
 .wrapRow {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+  align-items: flex-start;
 }
 
 .pokemonCardEmpty {
   display: flex;
   width: 100%;
-  max-width: 190px;
-  min-height: 270px;
+  height: 320px;
+  padding: 0.7rem;
+  border: 10px solid var(--app-border);
+  border-radius: 1.3rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 16%),
+    color-mix(in srgb, var(--app-surface-strong) 94%, transparent);
+  box-shadow: var(--app-shadow-soft);
+}
+
+.pokemonCardEmptyInner {
+  display: flex;
+  width: 100%;
+  flex: 1;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  border: 10px solid var(--app-border);
-  border-radius: 1rem;
-  background: color-mix(in srgb, var(--app-surface-strong) 94%, transparent);
-  box-shadow: var(--app-shadow-soft);
+  border-radius: 0.9rem;
 }
 
 .pokemonCardEmptyLogo {
   display: block;
   width: auto;
-  height: 150px;
+  height: 132px;
+  opacity: 0.8;
+}
+
+@media (max-width: 640px) {
+  .teamLayout {
+    padding: 1rem 0.9rem;
+  }
+
+  .cardGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pokemonCard,
+  .pokemonCardEmpty {
+    height: 320px;
+  }
 }
 
 .tableContainer {

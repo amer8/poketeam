@@ -1,7 +1,6 @@
 import Link from "next/link";
 import ColorModeSwitch from "./ColorModeSwitch";
 import { useColorMode } from "./ColorMode";
-import GitHubButton from "react-github-btn";
 import styles from "./LocalUi.module.css";
 
 const NavBar = () => {
@@ -9,26 +8,28 @@ const NavBar = () => {
   return (
     <nav className={styles.navBar}>
       <Link className={styles.navBrand} href="/team/list">
-          <img
-            alt="Poketeam logo"
-            className={styles.navLogo}
-            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg"
-          />
+        <img
+          alt="Poketeam logo"
+          className={styles.navLogo}
+          src="/Poke_Ball_icon.svg"
+        />
         <div className={styles.navTitleGroup}>
-            <span className={styles.navTitle}>PokéTeam</span>
-            <span className={styles.navSubtitle}>for PokéAPI</span>
+          <span className={styles.navTitle}>PokéTeam</span>
+          <span className={styles.navSubtitle}>for PokéAPI</span>
         </div>
-        </Link>
+      </Link>
       <div className={styles.navActions}>
         <ColorModeSwitch />
-        <GitHubButton
+        <a
+          className={styles.button}
           href="https://github.com/amer8/poketeam"
-          data-color-scheme={colorMode}
-          data-size="large"
           aria-label="Star buttons/github-buttons on GitHub"
+          data-color-mode={colorMode}
+          rel="noreferrer"
+          target="_blank"
         >
-          Star
-        </GitHubButton>
+          View on GitHub
+        </a>
       </div>
     </nav>
   );
