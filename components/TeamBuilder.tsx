@@ -1,17 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import nameGenerator from "project-name-generator";
 import PokemonCard from "./PokemonCard";
 import { saveTeam } from "@/services/teams";
 import { fetchRandomPokemon } from "@/services/pokeapi";
+import { generateTeamName } from "@/utils/teamName";
 import styles from "./LocalUi.module.css";
 
 const TeamBuilder = () => {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
-  const [teamName, setTeamName] = useState(
-    nameGenerator({ words: 2, alliterative: true }).spaced
-  );
+  const [teamName, setTeamName] = useState("");
   const [team, setTeam] = useState<any[]>([]);
 
   const handleAddPokemon = async () => {
@@ -35,6 +33,10 @@ const TeamBuilder = () => {
     },
     [handleSaveTeam, team.length, teamName.length]
   );
+
+  useEffect(() => {
+    setTeamName((currentTeamName) => currentTeamName || generateTeamName());
+  }, []);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
