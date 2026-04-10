@@ -8,9 +8,7 @@ const ExpTag = ({ baseExp }: Props) => {
   return (
     <span className={styles.expTag}>
       <span className={styles.expLabel}>EXP</span>
-      <span className={styles.expValue}>
-        {baseExp || "?"}
-      </span>
+      <span className={styles.expValue}>{baseExp || "?"}</span>
     </span>
   );
 };

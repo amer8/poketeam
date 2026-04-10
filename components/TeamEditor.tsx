@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import type { TeamWithMeta } from "@/types/pokemon";
 import { deleteTeam, findTeam } from "@/services/teams";
 import ExpTag from "./ExpTag";
 import PokemonCard from "./PokemonCard";
@@ -9,7 +10,7 @@ const TeamEditor = () => {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [team, setTeam] = useState<any | null>(null);
+  const [team, setTeam] = useState<TeamWithMeta | null>(null);
   const teamId =
     typeof router.query.id === "string"
       ? Number.parseInt(router.query.id, 10)
@@ -60,9 +61,11 @@ const TeamEditor = () => {
           </div>
           <div className={styles.teamSummaryContent}>
             <div className={styles.cardGrid}>
-              {[...pokemons, ...Array(6 - pokemons.length)].map((pokemon, i) => (
-                <PokemonCard key={i} pokemon={pokemon} />
-              ))}
+              {[...pokemons, ...Array(6 - pokemons.length)].map(
+                (pokemon, i) => (
+                  <PokemonCard key={i} pokemon={pokemon} />
+                ),
+              )}
             </div>
           </div>
         </div>

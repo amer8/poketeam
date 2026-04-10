@@ -1,16 +1,24 @@
+import type {
+  Pokemon,
+  PokemonAbility,
+  PokemonAbilityDetails,
+  PokemonApiPokemon,
+} from "@/types/pokemon";
 import { findPokemon, savePokemon } from "./pokemons";
 
 const POKEAPI_ORIGIN = "https://pokeapi.co";
 const POKEAPI_BASE_PATH = "/api/v2";
 const POKEAPI_BASE_URL = `${POKEAPI_ORIGIN}${POKEAPI_BASE_PATH}`;
 
-async function fetchJson(path: string) {
+async function fetchJson<T>(path: string): Promise<T> {
   const response = await fetch(`${POKEAPI_BASE_URL}${path}`);
   if (!response.ok) {
-    throw new Error(`PokeAPI request failed: ${response.status} ${response.statusText}`);
+    throw new Error(
+      `PokeAPI request failed: ${response.status} ${response.statusText}`,
+    );
   }
 
-  return response.json();
+  return response.json() as Promise<T>;
 }
 
 function extractAbilityId(abilityUrl: string) {
@@ -30,7 +38,7 @@ function extractAbilityId(abilityUrl: string) {
 
 export async function fetchRandomPokemon() {
   const maxPokemon = 1010;
-  let pokemon;
+  let pokemon: Pokemon | undefined;
 
   while (!pokemon) {
     const randomId = Math.floor(Math.random() * maxPokemon) + 1;
@@ -40,23 +48,27 @@ export async function fetchRandomPokemon() {
       return pokemon;
     }
 
-    const data = await fetchJson(`/pokemon/${randomId}`);
+    const data = await fetchJson<PokemonApiPokemon>(`/pokemon/${randomId}`);
     if (data.base_experience) {
-      pokemon = data;
+      const abilities: PokemonAbility[] = [];
+      for (const ab of data.abilities) {
+        if (ab.is_hidden) continue;
+
+        const abilityId = extractAbilityId(ab.ability.url);
+        const safeAbilityId = encodeURIComponent(String(abilityId));
+        const full = await fetchJson<PokemonAbilityDetails>(
+          `/ability/${safeAbilityId}`,
+        );
+
+        abilities.push({ ability: ab.ability, full });
+      }
+
+      pokemon = {
+        ...data,
+        abilities,
+      };
     }
   }
-
-  const abilities = [];
-  for (const ab of pokemon.abilities) {
-    if (ab.is_hidden) continue;
-
-    const abilityId = extractAbilityId(ab.ability.url);
-    const safeAbilityId = encodeURIComponent(String(abilityId));
-    const data = await fetchJson(`/ability/${safeAbilityId}`);
-    abilities.push({ ...ab, full: data });
-  }
-
-  pokemon.abilities = abilities;
 
   await savePokemon(pokemon);
 

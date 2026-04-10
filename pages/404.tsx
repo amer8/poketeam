@@ -16,10 +16,10 @@ export default function TeamList() {
       <main>
         <div className={styles.notFoundPage}>
           <div className={styles.notFoundCard}>
-          <h1>404: Page Not Found</h1>
-          <Link className={styles.textLink} href="/">
-            Back to home
-          </Link>
+            <h1>404: Page Not Found</h1>
+            <Link className={styles.textLink} href="/">
+              Back to home
+            </Link>
           </div>
         </div>
       </main>

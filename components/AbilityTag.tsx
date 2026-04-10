@@ -1,15 +1,8 @@
+import type { PokemonAbilityDetails } from "@/types/pokemon";
 import styles from "./LocalUi.module.css";
 
 interface Props {
-  ability: {
-    effect_entries: {
-      effect: string;
-      language?: {
-        name?: string;
-      };
-    }[];
-    name: string;
-  };
+  ability: PokemonAbilityDetails;
 }
 
 const AbilityTag = ({ ability }: Props) => {

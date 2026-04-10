@@ -9,6 +9,7 @@ const NavBar = () => {
   return (
     <nav className={styles.navBar}>
       <Link className={styles.navBrand} href="/team/list">
+        {/* eslint-disable-next-line @next/next/no-img-element -- local static icon is simpler here than next/image */}
         <img
           alt="Poketeam logo"
           className={styles.navLogo}

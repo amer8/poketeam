@@ -5,6 +5,7 @@ import {
   NextScript,
   type DocumentProps,
 } from "next/document";
+import Script from "next/script";
 
 export default function Document({ __NEXT_DATA__ }: DocumentProps) {
   const publicAssetBasePath = __NEXT_DATA__.assetPrefix
@@ -31,7 +32,10 @@ export default function Document({ __NEXT_DATA__ }: DocumentProps) {
         />
       </Head>
       <body>
-        <script src={`${publicAssetBasePath}color-mode-init.js`} />
+        <Script
+          src={`${publicAssetBasePath}color-mode-init.js`}
+          strategy="beforeInteractive"
+        />
         <Main />
         <NextScript />
       </body>

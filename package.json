@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "format": "prettier --write \"{pages,components,utils,hooks,services}/**/*.{{ts,tsx}}\""
+    "format": "prettier --write \"{pages,components,utils,services,types,public}/**/*.{ts,tsx,js}\" \"*.{js,md,json}\""
   },
   "engines": {
     "npm": "please-use-yarn-v1",

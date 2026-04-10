@@ -1,3 +1,4 @@
+import type { TeamWithMeta } from "@/types/pokemon";
 import router from "next/router";
 import ExpTag from "./ExpTag";
 import TypeBadge from "./TypeBadge";
@@ -5,7 +6,7 @@ import PokemonImg from "./PokemonImg";
 import styles from "./LocalUi.module.css";
 
 interface Props {
-  teams: any;
+  teams: TeamWithMeta[];
 }
 
 const TeamList = ({ teams }: Props) => {
@@ -19,7 +20,7 @@ const TeamList = ({ teams }: Props) => {
           </tr>
         </thead>
         <tbody>
-          {teams.map((team: any) => (
+          {teams.map((team) => (
             <tr
               className={styles.teamRow}
               key={team.id}
@@ -27,26 +28,20 @@ const TeamList = ({ teams }: Props) => {
             >
               <td className={styles.teamCellPrimary}>
                 <div className={styles.teamNameRow}>
-                  <span className={styles.teamName}>
-                    {team.name}
-                  </span>
+                  <span className={styles.teamName}>{team.name}</span>
                   <ExpTag baseExp={team.baseExpTotal} />
                 </div>
                 <br />
                 <br />
                 <div className={styles.wrapRow}>
-                  {Object.entries(team.badges).map((entry: any[]) => (
-                    <TypeBadge
-                      amount={entry[1]}
-                      key={entry[0]}
-                      type={entry[0]}
-                    />
+                  {Object.entries(team.badges).map(([type, amount]) => (
+                    <TypeBadge amount={amount} key={type} type={type} />
                   ))}
                 </div>
               </td>
               <td>
                 <div className={styles.teamPokemonRow}>
-                  {team.pokemons.map((pokemon: any) => (
+                  {team.pokemons.map((pokemon) => (
                     <PokemonImg
                       key={team.id + "-" + pokemon.id}
                       src={pokemon.sprites.front_default}

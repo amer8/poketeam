@@ -2,7 +2,7 @@ import { openDB } from "idb";
 
 const DB_NAME = "pokeTeam";
 
-export async function openDatabase(storeName: string) {
+export async function openDatabase() {
   return openDB(DB_NAME, 1, {
     upgrade(db) {
       db.createObjectStore("pokemons", {

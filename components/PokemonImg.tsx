@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- remote sprite URLs and static export make native img intentional */
 import styles from "./LocalUi.module.css";
 
 interface Props {

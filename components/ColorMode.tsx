@@ -37,32 +37,23 @@ function applyColorMode(colorMode: ColorMode) {
   document.documentElement.dataset.colorMode = colorMode;
 }
 
-export function ColorModeProvider({ children }: { children: ReactNode }) {
-  const [colorMode, setColorMode] = useState<ColorMode>("light");
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  useEffect(() => {
+function getInitialColorMode(): ColorMode {
+  if (typeof document !== "undefined") {
     const rootColorMode = document.documentElement.dataset.colorMode;
-    const nextColorMode =
-      rootColorMode === "light" || rootColorMode === "dark"
-        ? rootColorMode
-        : getPreferredColorMode();
-
-    if (rootColorMode !== nextColorMode) {
-      applyColorMode(nextColorMode);
+    if (rootColorMode === "light" || rootColorMode === "dark") {
+      return rootColorMode;
     }
+  }
 
-    setColorMode(nextColorMode);
-    setIsInitialized(true);
-  }, []);
+  return getPreferredColorMode();
+}
+
+export function ColorModeProvider({ children }: { children: ReactNode }) {
+  const [colorMode, setColorMode] = useState<ColorMode>(getInitialColorMode);
 
   useEffect(() => {
-    if (!isInitialized) {
-      return;
-    }
-
     applyColorMode(colorMode);
-  }, [colorMode, isInitialized]);
+  }, [colorMode]);
 
   const value = useMemo<ColorModeContextValue>(
     () => ({
@@ -76,7 +67,7 @@ export function ColorModeProvider({ children }: { children: ReactNode }) {
         });
       },
     }),
-    [colorMode]
+    [colorMode],
   );
 
   return (

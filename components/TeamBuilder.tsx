@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import type { Pokemon, TeamRecord } from "@/types/pokemon";
 import PokemonCard from "./PokemonCard";
 import { saveTeam } from "@/services/teams";
 import { fetchRandomPokemon } from "@/services/pokeapi";
@@ -11,7 +12,7 @@ const TeamBuilder = () => {
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [teamName, setTeamName] = useState("");
-  const [team, setTeam] = useState<any[]>([]);
+  const [team, setTeam] = useState<Pokemon[]>([]);
 
   const handleAddPokemon = async () => {
     setErrorMessage(null);
@@ -21,7 +22,9 @@ const TeamBuilder = () => {
       const newPokemon = await fetchRandomPokemon();
       setTeam((currentTeam) => [...currentTeam, newPokemon]);
     } catch {
-      setErrorMessage("Could not load a Pokemon. Check your connection and try again.");
+      setErrorMessage(
+        "Could not load a Pokemon. Check your connection and try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -32,7 +35,8 @@ const TeamBuilder = () => {
     setLoading(true);
 
     try {
-      await saveTeam({ name: teamName, pokemons: team });
+      const teamToSave: TeamRecord = { name: teamName, pokemons: team };
+      await saveTeam(teamToSave);
       await router.push("/team/list");
     } catch {
       setErrorMessage("Could not save the team. Please try again.");
@@ -42,7 +46,7 @@ const TeamBuilder = () => {
   }, [router, team, teamName]);
 
   const handleKeyDown = useCallback(
-    (event: any) => {
+    (event: KeyboardEvent) => {
       if (
         event.key === "Enter" &&
         !isLoading &&
@@ -52,7 +56,7 @@ const TeamBuilder = () => {
         handleSaveTeam();
       }
     },
-    [handleSaveTeam, isLoading, team.length, teamName.length]
+    [handleSaveTeam, isLoading, team.length, teamName.length],
   );
 
   useEffect(() => {
@@ -96,23 +100,23 @@ const TeamBuilder = () => {
           </div>
         ) : (
           <div className={styles.inlineForm}>
-              <input
-                className={styles.textInput}
-                value={teamName}
-                onChange={(e) => setTeamName(e.target.value)}
-                placeholder="Enter your team name"
-                style={{ textTransform: "capitalize" }}
-              />
-              <button
-                className={styles.button}
-                disabled={isLoading}
-                onClick={handleSaveTeam}
-                type="button"
-              >
-                Save
-              </button>
-              <span className={styles.helperText}>or</span>
-              <span className={styles.kbd}>Enter</span>
+            <input
+              className={styles.textInput}
+              value={teamName}
+              onChange={(e) => setTeamName(e.target.value)}
+              placeholder="Enter your team name"
+              style={{ textTransform: "capitalize" }}
+            />
+            <button
+              className={styles.button}
+              disabled={isLoading}
+              onClick={handleSaveTeam}
+              type="button"
+            >
+              Save
+            </button>
+            <span className={styles.helperText}>or</span>
+            <span className={styles.kbd}>Enter</span>
           </div>
         )}
       </div>

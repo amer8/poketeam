@@ -10,7 +10,7 @@
           : "light";
 
     document.documentElement.dataset.colorMode = mode;
-  } catch (error) {
+  } catch {
     document.documentElement.dataset.colorMode = "light";
   }
 })();

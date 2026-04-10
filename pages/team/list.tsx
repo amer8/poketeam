@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import type { TeamWithMeta } from "@/types/pokemon";
 import NavBar from "@/components/NavBar";
 import ListFilter from "@/components/TeamListFilter";
 import { useEffect, useState } from "react";
@@ -20,7 +21,7 @@ interface SortOption {
   value: "exp-desc" | "exp-asc" | "name-asc" | "name-desc";
 }
 
-function sortTeams(teams: any[], option: SortOption) {
+function sortTeams(teams: TeamWithMeta[], option: SortOption) {
   const sorted = [...teams];
 
   switch (option.value) {
@@ -45,11 +46,11 @@ function sortTeams(teams: any[], option: SortOption) {
 
 export default function PageList() {
   const [isTeamsLoading, setIsTeamsLoading] = useState<boolean>(true);
-  const [teams, setTeams] = useState<any[]>([]);
+  const [teams, setTeams] = useState<TeamWithMeta[]>([]);
   const [availableTypes, setAvailableTypes] = useState<string[]>([]);
-  const [filterQuery, setFilterQuery] = useState<FilterQuery>(
-    {} as FilterQuery
-  );
+  const [filterQuery, setFilterQuery] = useState<FilterQuery>({
+    type: undefined,
+  });
   const [sortOption, setSortOption] = useState<SortOption>();
 
   const sortOptions: SortOption[] = [
@@ -62,16 +63,17 @@ export default function PageList() {
   useEffect(() => {
     const runQuery = async () => {
       let teams = await listTeams();
-      const types = new Set();
+      const types = new Set<string>();
       for (const team of teams) {
         for (const t in team.badges) {
           types.add(t);
         }
       }
-      setAvailableTypes(Array.from(types).sort() as string[]);
+      setAvailableTypes(Array.from(types).sort());
 
-      if (filterQuery.type) {
-        teams = teams.filter((t) => !!t.badges[filterQuery.type as string]);
+      const selectedType = filterQuery.type;
+      if (selectedType) {
+        teams = teams.filter((team) => Boolean(team.badges[selectedType]));
       }
       setTeams(teams.reverse());
       setIsTeamsLoading(false);
@@ -115,7 +117,7 @@ export default function PageList() {
               </div>
               <div className={styles.toolbarAction}>
                 <Link className={styles.primaryButton} href="/team/create">
-                Create team
+                  Create team
                 </Link>
               </div>
             </div>

@@ -12,11 +12,7 @@ interface Props {
   onSelectOption: (option: SortOption) => void;
 }
 
-const TeamSortBY = ({
-  sortOptions,
-  selectedOption,
-  onSelectOption
-}: Props) => {
+const TeamSortBY = ({ sortOptions, selectedOption, onSelectOption }: Props) => {
   const selectedValue = selectedOption?.value || "";
 
   return (
@@ -26,7 +22,7 @@ const TeamSortBY = ({
         className={styles.selectField}
         onChange={(event) => {
           const nextOption = sortOptions.find(
-            (sortOption) => sortOption.value === event.target.value
+            (sortOption) => sortOption.value === event.target.value,
           );
 
           if (nextOption) {

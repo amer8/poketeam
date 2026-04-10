@@ -22,57 +22,57 @@ const TeamListIntro = () => {
             <li className={styles.introListItem}>
               <CheckCircleIcon className={styles.introListIcon} />
               <span>
-              <a
-                className={styles.textLink}
-                href="https://pokeapi.co/"
-                rel="noreferrer"
-                target="_blank"
-              >
-                PokéAPI
-              </a>{" "}
-              is created by{" "}
-              <a
-                className={styles.textLink}
-                href="https://phalt.github.io/"
-                rel="noreferrer"
-                target="_blank"
-              >
-                Paul Hallett
-              </a>{" "}
-              and other{" "}
-              <a
-                className={styles.textLink}
-                href="https://github.com/PokeAPI/pokeapi#contributing"
-                rel="noreferrer"
-                target="_blank"
-              >
-                PokéAPI contributors
-              </a>{" "}
-              around the world. Pokémon and Pokémon character names are
-              trademarks of Nintendo.
+                <a
+                  className={styles.textLink}
+                  href="https://pokeapi.co/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  PokéAPI
+                </a>{" "}
+                is created by{" "}
+                <a
+                  className={styles.textLink}
+                  href="https://phalt.github.io/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Paul Hallett
+                </a>{" "}
+                and other{" "}
+                <a
+                  className={styles.textLink}
+                  href="https://github.com/PokeAPI/pokeapi#contributing"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  PokéAPI contributors
+                </a>{" "}
+                around the world. Pokémon and Pokémon character names are
+                trademarks of Nintendo.
               </span>
             </li>
             <li className={styles.introListItem}>
               <CheckCircleIcon className={styles.introListIcon} />
               <span>
-              <a
-                className={styles.textLink}
-                href="https://commons.wikimedia.org/wiki/File:Pok%C3%A9_Ball_icon.svg"
-                rel="noreferrer"
-                target="_blank"
-              >
-                &quot;Poké Ball icon&quot;
-              </a>{" "}
-              by Andreuvv is licensed under CC BY-SA 4.0. To view a copy
-              of this license, visit{" "}
-              <a
-                className={styles.textLink}
-                href="https://creativecommons.org/licenses/by-sa/4.0/"
-                rel="noreferrer"
-                target="_blank"
-              >
-                https://creativecommons.org/licenses/by-sa/4.0/.
-              </a>
+                <a
+                  className={styles.textLink}
+                  href="https://commons.wikimedia.org/wiki/File:Pok%C3%A9_Ball_icon.svg"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  &quot;Poké Ball icon&quot;
+                </a>{" "}
+                by Andreuvv is licensed under CC BY-SA 4.0. To view a copy of
+                this license, visit{" "}
+                <a
+                  className={styles.textLink}
+                  href="https://creativecommons.org/licenses/by-sa/4.0/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  https://creativecommons.org/licenses/by-sa/4.0/.
+                </a>
               </span>
             </li>
           </ul>

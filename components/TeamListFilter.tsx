@@ -11,7 +11,8 @@ const TeamListFilter = ({
   onSelectType,
   selectedType,
 }: Props) => {
-  const getTypeLabel = (type: string) => `${type.charAt(0).toUpperCase()}${type.slice(1)}`;
+  const getTypeLabel = (type: string) =>
+    `${type.charAt(0).toUpperCase()}${type.slice(1)}`;
 
   return (
     <label className={styles.fieldGroup}>
