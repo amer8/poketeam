@@ -7,7 +7,7 @@ interface Props {
   withTooltip?: boolean;
 }
 
-const FALLBACK_IMAGE_SRC = "/Poke_Ball_icon.svg";
+const FALLBACK_IMAGE_SRC = "Poke_Ball_icon.svg";
 const ALLOWED_SPRITE_ORIGINS = new Set(["https://raw.githubusercontent.com"]);
 
 function getSafePokemonImageSrc(src: string) {

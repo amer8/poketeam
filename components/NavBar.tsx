@@ -5,13 +5,14 @@ import styles from "./LocalUi.module.css";
 
 const NavBar = () => {
   const { colorMode } = useColorMode();
+
   return (
     <nav className={styles.navBar}>
       <Link className={styles.navBrand} href="/team/list">
         <img
           alt="Poketeam logo"
           className={styles.navLogo}
-          src="/Poke_Ball_icon.svg"
+          src="Poke_Ball_icon.svg"
         />
         <div className={styles.navTitleGroup}>
           <span className={styles.navTitle}>PokéTeam</span>

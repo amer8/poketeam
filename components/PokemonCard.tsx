@@ -72,7 +72,7 @@ const PokemonCard = ({ pokemon }: Props) => {
         <img
           alt="Pokeball logo"
           className={styles.pokemonCardEmptyLogo}
-          src="/Poke_Ball_icon.svg"
+          src="Poke_Ball_icon.svg"
         />
       </div>
     </div>

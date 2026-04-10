@@ -12,7 +12,6 @@ export default function TeamList() {
           content="Pokeapi team let's build your dream team"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/Poke_Ball_icon.svg" />
       </Head>
       <main>
         <div className={styles.notFoundPage}>
