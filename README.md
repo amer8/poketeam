@@ -1,6 +1,6 @@
 # PokéTeam
 
-PokéTeam is a small [Next.js](https://nextjs.org/) app for building six-Pokémon teams from random [PokéAPI](https://pokeapi.co/) pulls. It runs entirely in the browser: fetched Pokémon are cached locally with IndexedDB, saved teams are stored in the same browser, and the app can be exported as a static site for GitHub Pages.
+PokéTeam is a lightweight [Next.js](https://nextjs.org/) demo that uses [PokéAPI](https://pokeapi.co/) data to randomly generate Pokémon teams — no backend required, just the browser.
 
 ## Features
 
