@@ -6,7 +6,7 @@ export default function PageEdit() {
   return (
     <>
       <Head>
-        <title>Create team</title>
+        <title>Update team</title>
         <meta
           name="description"
           content="Pokeapi team let's build your dream team"

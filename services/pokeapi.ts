@@ -36,8 +36,17 @@ function extractAbilityId(abilityUrl: string) {
   return Number.parseInt(abilityPath[1], 10);
 }
 
+let cachedPokemonCount: number | undefined;
+
+async function fetchPokemonCount(): Promise<number> {
+  if (cachedPokemonCount !== undefined) return cachedPokemonCount;
+  const data = await fetchJson<{ count: number }>("/pokemon?limit=1&offset=0");
+  cachedPokemonCount = data.count;
+  return cachedPokemonCount;
+}
+
 export async function fetchRandomPokemon() {
-  const maxPokemon = 1010;
+  const maxPokemon = await fetchPokemonCount();
   let pokemon: Pokemon | undefined;
 
   while (!pokemon) {

@@ -46,6 +46,7 @@ function sortTeams(teams: TeamWithMeta[], option: SortOption) {
 
 export default function PageList() {
   const [isTeamsLoading, setIsTeamsLoading] = useState<boolean>(true);
+  const [teamsError, setTeamsError] = useState<string | null>(null);
   const [teams, setTeams] = useState<TeamWithMeta[]>([]);
   const [availableTypes, setAvailableTypes] = useState<string[]>([]);
   const [filterQuery, setFilterQuery] = useState<FilterQuery>({
@@ -62,21 +63,28 @@ export default function PageList() {
 
   useEffect(() => {
     const runQuery = async () => {
-      let teams = await listTeams();
-      const types = new Set<string>();
-      for (const team of teams) {
-        for (const t in team.badges) {
-          types.add(t);
+      try {
+        let teams = await listTeams();
+        const types = new Set<string>();
+        for (const team of teams) {
+          for (const t in team.badges) {
+            types.add(t);
+          }
         }
-      }
-      setAvailableTypes(Array.from(types).sort());
+        setAvailableTypes(Array.from(types).sort());
 
-      const selectedType = filterQuery.type;
-      if (selectedType) {
-        teams = teams.filter((team) => Boolean(team.badges[selectedType]));
+        const selectedType = filterQuery.type;
+        if (selectedType) {
+          teams = teams.filter((team) => Boolean(team.badges[selectedType]));
+        }
+        setTeams(teams.reverse());
+      } catch (e) {
+        setTeamsError(
+          e instanceof Error ? e.message : "Failed to load teams.",
+        );
+      } finally {
+        setIsTeamsLoading(false);
       }
-      setTeams(teams.reverse());
-      setIsTeamsLoading(false);
     };
     runQuery();
   }, [filterQuery]);
@@ -96,6 +104,8 @@ export default function PageList() {
         <NavBar />
         {isTeamsLoading ? (
           <TeamListLoading />
+        ) : teamsError ? (
+          <p>{teamsError}</p>
         ) : teams.length ? (
           <>
             <div className={styles.toolbar}>
