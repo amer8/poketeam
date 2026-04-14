@@ -59,18 +59,18 @@ export async function fetchRandomPokemon() {
 
     const data = await fetchJson<PokemonApiPokemon>(`/pokemon/${randomId}`);
     if (data.base_experience) {
-      const abilities: PokemonAbility[] = [];
-      for (const ab of data.abilities) {
-        if (ab.is_hidden) continue;
-
-        const abilityId = extractAbilityId(ab.ability.url);
-        const safeAbilityId = encodeURIComponent(String(abilityId));
-        const full = await fetchJson<PokemonAbilityDetails>(
-          `/ability/${safeAbilityId}`,
-        );
-
-        abilities.push({ ability: ab.ability, full });
-      }
+      const abilities = await Promise.all(
+        data.abilities
+          .filter((ab) => !ab.is_hidden)
+          .map(async (ab): Promise<PokemonAbility> => {
+            const abilityId = extractAbilityId(ab.ability.url);
+            const safeAbilityId = encodeURIComponent(String(abilityId));
+            const full = await fetchJson<PokemonAbilityDetails>(
+              `/ability/${safeAbilityId}`,
+            );
+            return { ability: ab.ability, full };
+          }),
+      );
 
       pokemon = {
         ...data,

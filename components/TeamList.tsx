@@ -24,7 +24,7 @@ const TeamList = ({ teams }: Props) => {
             <tr
               className={styles.teamRow}
               key={team.id}
-              onClick={() => router.push(`/team/${team.id}/edit`)}
+              onClick={() => router.push(`/team/${team.id}/edit/`)}
             >
               <td className={styles.teamCellPrimary}>
                 <div className={styles.teamNameRow}>
