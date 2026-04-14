@@ -30,7 +30,7 @@ Please include the following information in your report:
 This project follows security best practices including:
 
 - Dependency scanning with Dependabot
-- Static analysis with gosec and golangci-lint
+- Static analysis with CodeQL and ESLint
 - Code review requirements for all changes
 - Regular security audits
 
