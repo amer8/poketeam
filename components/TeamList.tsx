@@ -41,9 +41,9 @@ const TeamList = ({ teams }: Props) => {
               </td>
               <td>
                 <div className={styles.teamPokemonRow}>
-                  {team.pokemons.map((pokemon) => (
+                  {team.pokemons.map((pokemon, index) => (
                     <PokemonImg
-                      key={team.id + "-" + pokemon.id}
+                      key={`${team.id}-${pokemon.id}-${index}`}
                       src={pokemon.sprites.front_default}
                       pokemonName={pokemon.name}
                       size={"100px"}

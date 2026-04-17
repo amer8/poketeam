@@ -13,6 +13,9 @@ const TeamBuilder = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [teamName, setTeamName] = useState("");
   const [team, setTeam] = useState<Pokemon[]>([]);
+  const trimmedTeamName = teamName.trim();
+  const canSaveTeam =
+    !isLoading && team.length === 6 && trimmedTeamName.length > 0;
 
   const handleAddPokemon = async () => {
     setErrorMessage(null);
@@ -31,11 +34,23 @@ const TeamBuilder = () => {
   };
 
   const handleSaveTeam = useCallback(async () => {
+    if (team.length !== 6) {
+      return;
+    }
+
+    if (!trimmedTeamName) {
+      setErrorMessage("Please enter a team name before saving.");
+      return;
+    }
+
     setErrorMessage(null);
     setLoading(true);
 
     try {
-      const teamToSave: TeamRecord = { name: teamName, pokemons: team };
+      const teamToSave: TeamRecord = {
+        name: trimmedTeamName,
+        pokemons: team,
+      };
       await saveTeam(teamToSave);
       await router.push("/team/list");
     } catch {
@@ -43,20 +58,15 @@ const TeamBuilder = () => {
     } finally {
       setLoading(false);
     }
-  }, [router, team, teamName]);
+  }, [router, team, trimmedTeamName]);
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      if (
-        event.key === "Enter" &&
-        !isLoading &&
-        team.length === 6 &&
-        teamName.length
-      ) {
-        handleSaveTeam();
+      if (event.key === "Enter" && canSaveTeam) {
+        void handleSaveTeam();
       }
     },
-    [handleSaveTeam, isLoading, team.length, teamName.length],
+    [canSaveTeam, handleSaveTeam],
   );
 
   useEffect(() => {
@@ -103,13 +113,16 @@ const TeamBuilder = () => {
             <input
               className={styles.textInput}
               value={teamName}
-              onChange={(e) => setTeamName(e.target.value)}
+              onChange={(e) => {
+                setTeamName(e.target.value);
+                setErrorMessage(null);
+              }}
               placeholder="Enter your team name"
               style={{ textTransform: "capitalize" }}
             />
             <button
               className={styles.button}
-              disabled={isLoading}
+              disabled={!canSaveTeam}
               onClick={handleSaveTeam}
               type="button"
             >

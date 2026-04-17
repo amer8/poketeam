@@ -6,15 +6,21 @@ import ExpTag from "./ExpTag";
 import PokemonCard from "./PokemonCard";
 import styles from "./LocalUi.module.css";
 
-const TeamEditor = () => {
+interface Props {
+  teamIdOverride?: number;
+}
+
+const TeamEditor = ({ teamIdOverride }: Props) => {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [team, setTeam] = useState<TeamWithMeta | null>(null);
-  const teamId =
+  const routeTeamId =
     typeof router.query.id === "string"
       ? Number.parseInt(router.query.id, 10)
-      : Number.NaN;
+      : undefined;
+  const hasResolvedTeamId = teamIdOverride !== undefined || router.isReady;
+  const teamId = teamIdOverride ?? routeTeamId ?? Number.NaN;
   const hasValidTeamId = Number.isInteger(teamId) && teamId > 0;
 
   const handleDeleteTeam = useCallback(async () => {
@@ -36,16 +42,51 @@ const TeamEditor = () => {
   }, [hasValidTeamId, router, teamId]);
 
   useEffect(() => {
-    if (!hasValidTeamId) {
-      setTeam(null);
+    if (!hasResolvedTeamId) {
       return;
     }
 
-    (async () => {
-      const team = await findTeam(teamId);
-      setTeam(team ?? null);
+    if (!hasValidTeamId) {
+      setTeam(null);
+      setErrorMessage("Team not found.");
+      setLoading(false);
+      return;
+    }
+
+    let isCancelled = false;
+
+    setErrorMessage(null);
+    setLoading(true);
+
+    void (async () => {
+      try {
+        const nextTeam = await findTeam(teamId);
+        if (isCancelled) {
+          return;
+        }
+
+        setTeam(nextTeam ?? null);
+        if (!nextTeam) {
+          setErrorMessage("Team not found.");
+        }
+      } catch {
+        if (isCancelled) {
+          return;
+        }
+
+        setTeam(null);
+        setErrorMessage("Could not load the team. Please try again.");
+      } finally {
+        if (!isCancelled) {
+          setLoading(false);
+        }
+      }
     })();
-  }, [hasValidTeamId, teamId]);
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [hasResolvedTeamId, hasValidTeamId, teamId]);
 
   const pokemons = team?.pokemons ?? [];
 
@@ -80,7 +121,7 @@ const TeamEditor = () => {
         </button>
         <button
           className={`${styles.button} ${styles.buttonDanger}`}
-          disabled={isLoading}
+          disabled={isLoading || !team}
           onClick={handleDeleteTeam}
           type="button"
         >
