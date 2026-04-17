@@ -94,11 +94,64 @@
 
 .pokemonImgWrap {
   display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: help;
+  appearance: none;
+}
+
+.pokemonImgWrap:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--app-link) 70%, transparent);
+  outline-offset: 0.2rem;
+  border-radius: 0.75rem;
 }
 
 .pokemonImg {
   display: block;
   object-fit: contain;
+}
+
+.pokemonTooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.45rem);
+  transform: translate(-50%, 0.25rem);
+  padding: 0.35rem 0.55rem;
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, #0f172a 94%, #000 6%);
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.35);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: capitalize;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+  z-index: 1;
+}
+
+.pokemonTooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 0.55rem;
+  height: 0.55rem;
+  background: color-mix(in srgb, #0f172a 94%, #000 6%);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.pokemonTooltipVisible {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 .loadingRoot {

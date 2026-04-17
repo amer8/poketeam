@@ -10,12 +10,20 @@ const POKEAPI_ORIGIN = "https://pokeapi.co";
 const POKEAPI_BASE_PATH = "/api/v2";
 const POKEAPI_BASE_URL = `${POKEAPI_ORIGIN}${POKEAPI_BASE_PATH}`;
 
+class PokeApiError extends Error {
+  status: number;
+
+  constructor(status: number, statusText: string) {
+    super(`PokeAPI request failed: ${status} ${statusText}`);
+    this.name = "PokeApiError";
+    this.status = status;
+  }
+}
+
 async function fetchJson<T>(path: string): Promise<T> {
   const response = await fetch(`${POKEAPI_BASE_URL}${path}`);
   if (!response.ok) {
-    throw new Error(
-      `PokeAPI request failed: ${response.status} ${response.statusText}`,
-    );
+    throw new PokeApiError(response.status, response.statusText);
   }
 
   return response.json() as Promise<T>;
@@ -45,41 +53,60 @@ async function fetchPokemonCount(): Promise<number> {
   return cachedPokemonCount;
 }
 
+function isMissingPokemonError(error: unknown) {
+  return error instanceof PokeApiError && error.status === 404;
+}
+
+async function fetchPokemonById(pokemonId: number): Promise<Pokemon | null> {
+  const cachedPokemon = await findPokemon(pokemonId);
+  if (cachedPokemon) {
+    return cachedPokemon;
+  }
+
+  try {
+    const data = await fetchJson<PokemonApiPokemon>(`/pokemon/${pokemonId}`);
+    if (data.base_experience == null) {
+      return null;
+    }
+
+    const abilities = await Promise.all(
+      data.abilities
+        .filter((ab) => !ab.is_hidden)
+        .map(async (ab): Promise<PokemonAbility> => {
+          const abilityId = extractAbilityId(ab.ability.url);
+          const safeAbilityId = encodeURIComponent(String(abilityId));
+          const full = await fetchJson<PokemonAbilityDetails>(
+            `/ability/${safeAbilityId}`,
+          );
+          return { ability: ab.ability, full };
+        }),
+    );
+
+    const pokemon: Pokemon = {
+      ...data,
+      abilities,
+    };
+
+    await savePokemon(pokemon);
+
+    return pokemon;
+  } catch (error) {
+    if (isMissingPokemonError(error)) {
+      return null;
+    }
+
+    throw error;
+  }
+}
+
 export async function fetchRandomPokemon() {
   const maxPokemon = await fetchPokemonCount();
-  let pokemon: Pokemon | undefined;
 
-  while (!pokemon) {
+  while (true) {
     const randomId = Math.floor(Math.random() * maxPokemon) + 1;
-
-    pokemon = await findPokemon(randomId);
+    const pokemon = await fetchPokemonById(randomId);
     if (pokemon) {
       return pokemon;
     }
-
-    const data = await fetchJson<PokemonApiPokemon>(`/pokemon/${randomId}`);
-    if (data.base_experience) {
-      const abilities = await Promise.all(
-        data.abilities
-          .filter((ab) => !ab.is_hidden)
-          .map(async (ab): Promise<PokemonAbility> => {
-            const abilityId = extractAbilityId(ab.ability.url);
-            const safeAbilityId = encodeURIComponent(String(abilityId));
-            const full = await fetchJson<PokemonAbilityDetails>(
-              `/ability/${safeAbilityId}`,
-            );
-            return { ability: ab.ability, full };
-          }),
-      );
-
-      pokemon = {
-        ...data,
-        abilities,
-      };
-    }
   }
-
-  await savePokemon(pokemon);
-
-  return pokemon;
 }

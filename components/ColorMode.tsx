@@ -4,7 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
 } from "react";
 
 type ColorMode = "light" | "dark";
@@ -17,6 +17,19 @@ interface ColorModeContextValue {
 const COLOR_MODE_STORAGE_KEY = "color-mode";
 
 const ColorModeContext = createContext<ColorModeContextValue | null>(null);
+const DEFAULT_COLOR_MODE: ColorMode = "light";
+const colorModeListeners = new Set<() => void>();
+
+function subscribeToColorMode(listener: () => void) {
+  colorModeListeners.add(listener);
+  return () => {
+    colorModeListeners.delete(listener);
+  };
+}
+
+function notifyColorModeListeners() {
+  colorModeListeners.forEach((listener) => listener());
+}
 
 function getPreferredColorMode(): ColorMode {
   if (typeof window === "undefined") {
@@ -37,7 +50,7 @@ function applyColorMode(colorMode: ColorMode) {
   document.documentElement.dataset.colorMode = colorMode;
 }
 
-function getInitialColorMode(): ColorMode {
+function getCurrentColorMode(): ColorMode {
   if (typeof document !== "undefined") {
     const rootColorMode = document.documentElement.dataset.colorMode;
     if (rootColorMode === "light" || rootColorMode === "dark") {
@@ -49,22 +62,27 @@ function getInitialColorMode(): ColorMode {
 }
 
 export function ColorModeProvider({ children }: { children: ReactNode }) {
-  const [colorMode, setColorMode] = useState<ColorMode>(getInitialColorMode);
+  const colorMode = useSyncExternalStore(
+    subscribeToColorMode,
+    getCurrentColorMode,
+    () => DEFAULT_COLOR_MODE,
+  );
 
   useEffect(() => {
-    applyColorMode(colorMode);
+    const rootColorMode = document.documentElement.dataset.colorMode;
+    if (rootColorMode !== "light" && rootColorMode !== "dark") {
+      applyColorMode(colorMode);
+    }
   }, [colorMode]);
 
   const value = useMemo<ColorModeContextValue>(
     () => ({
       colorMode,
       toggleColorMode: () => {
-        setColorMode((currentMode) => {
-          const nextMode = currentMode === "light" ? "dark" : "light";
-          window.localStorage.setItem(COLOR_MODE_STORAGE_KEY, nextMode);
-          applyColorMode(nextMode);
-          return nextMode;
-        });
+        const nextMode = colorMode === "light" ? "dark" : "light";
+        window.localStorage.setItem(COLOR_MODE_STORAGE_KEY, nextMode);
+        applyColorMode(nextMode);
+        notifyColorModeListeners();
       },
     }),
     [colorMode],

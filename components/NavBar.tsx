@@ -1,11 +1,8 @@
 import Link from "next/link";
 import ColorModeSwitch from "./ColorModeSwitch";
-import { useColorMode } from "./ColorMode";
 import styles from "./LocalUi.module.css";
 
 const NavBar = () => {
-  const { colorMode } = useColorMode();
-
   return (
     <nav className={styles.navBar}>
       <Link className={styles.navBrand} href="/team/list">
@@ -26,7 +23,6 @@ const NavBar = () => {
           className={styles.button}
           href="https://github.com/amer8/poketeam"
           aria-label="Star buttons/github-buttons on GitHub"
-          data-color-mode={colorMode}
           rel="noreferrer"
           target="_blank"
         >

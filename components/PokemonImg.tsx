@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element -- remote sprite URLs and static export make native img intentional */
+import { useId, useState } from "react";
 import styles from "./LocalUi.module.css";
 
 interface Props {
@@ -34,13 +35,15 @@ function getSafePokemonImageSrc(src: string) {
 }
 
 const PokemonImg = ({ size, src, pokemonName, withTooltip }: Props) => {
+  const [isTooltipVisible, setTooltipVisible] = useState(false);
+  const tooltipId = useId();
   const tooltipLabel = pokemonName.replaceAll("-", " ");
   const safeSrc = getSafePokemonImageSrc(src);
 
   if (!withTooltip) {
     return (
       <img
-        alt={pokemonName}
+        alt={tooltipLabel}
         className={styles.pokemonImg}
         src={safeSrc}
         style={{ height: size, width: size }}
@@ -49,14 +52,35 @@ const PokemonImg = ({ size, src, pokemonName, withTooltip }: Props) => {
   }
 
   return (
-    <span className={styles.pokemonImgWrap} title={tooltipLabel}>
+    <button
+      aria-describedby={isTooltipVisible ? tooltipId : undefined}
+      aria-label={tooltipLabel}
+      className={styles.pokemonImgWrap}
+      onBlur={() => setTooltipVisible(false)}
+      onClick={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        setTooltipVisible(true);
+      }}
+      onFocus={() => setTooltipVisible(true)}
+      onMouseEnter={() => setTooltipVisible(true)}
+      onMouseLeave={() => setTooltipVisible(false)}
+      type="button"
+    >
       <img
-        alt={pokemonName}
+        alt={tooltipLabel}
         className={styles.pokemonImg}
         src={safeSrc}
         style={{ height: size, width: size }}
       />
-    </span>
+      <span
+        className={`${styles.pokemonTooltip} ${isTooltipVisible ? styles.pokemonTooltipVisible : ""}`}
+        id={tooltipId}
+        role="tooltip"
+      >
+        {tooltipLabel}
+      </span>
+    </button>
   );
 };
 
