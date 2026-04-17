@@ -41,6 +41,15 @@ No environment variables are required.
 
 `package.json` also defines `yarn start`, but this project is configured for static export, so the primary production artifact is the generated `out/` directory.
 
+## Local Docker Preview
+
+`Dockerfile.dev` builds the static export and serves it with an Nginx fallback that matches GitHub Pages more closely by returning `404.html` for unknown routes. That keeps direct loads of client-only routes, such as `/team/<id>/edit/`, aligned with the GitHub Pages deployment behavior.
+
+```bash
+docker build -f Dockerfile.dev -t poketeam-dev .
+docker run --rm -p 8080:80 poketeam-dev
+```
+
 ## Attribution
 
 - [PokéAPI](https://pokeapi.co/) is created by [Paul Hallett](https://phalt.github.io/) and other [PokéAPI contributors](https://github.com/PokeAPI/pokeapi#contributing) around the world. Pokémon and Pokémon character names are trademarks of Nintendo.
