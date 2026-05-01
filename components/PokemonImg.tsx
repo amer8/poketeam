@@ -12,13 +12,19 @@ interface Props {
 const FALLBACK_IMAGE_SRC = "Poke_Ball_icon.svg";
 const ALLOWED_SPRITE_ORIGINS = new Set(["https://raw.githubusercontent.com"]);
 
+function isAllowedRelativeImagePath(path: string) {
+  return (
+    path === "/Poke_Ball_icon.svg" || path.startsWith("/PokeAPI/sprites/")
+  );
+}
+
 function getSafePokemonImageSrc(src: string) {
   if (!src) {
     return FALLBACK_IMAGE_SRC;
   }
 
   if (src.startsWith("/") && !src.startsWith("//")) {
-    return src;
+    return isAllowedRelativeImagePath(src) ? src : FALLBACK_IMAGE_SRC;
   }
 
   try {
