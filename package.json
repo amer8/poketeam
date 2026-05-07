@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "idb": "^8.0.0",
-    "next": "^16.2.4",
+    "next": "^16.2.5",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-github-btn": "^1.4.0"
@@ -27,7 +27,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.8.0",
-    "eslint-config-next": "^16.2.4",
+    "eslint-config-next": "^16.2.5",
     "prettier": "^3.8.3",
     "typescript": "^6.0.3"
   }
