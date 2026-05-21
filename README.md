@@ -1,6 +1,6 @@
-# PokéTeam
+`poketeam` is a lightweight [Next.js](https://nextjs.org/) demo that uses [PokéAPI](https://pokeapi.co/) data to randomly generate Pokémon teams — no backend required, just the browser.
 
-PokéTeam is a lightweight [Next.js](https://nextjs.org/) demo that uses [PokéAPI](https://pokeapi.co/) data to randomly generate Pokémon teams — no backend required, just the browser.
+Deployed to GitHub Pages: https://amer8.github.io/poketeam/
 
 ## Features
 
